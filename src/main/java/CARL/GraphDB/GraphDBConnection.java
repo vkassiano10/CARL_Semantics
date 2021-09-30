@@ -190,7 +190,7 @@ public class GraphDBConnection {
 
         Path path = Paths.get(".").toAbsolutePath().normalize();
         String strRepositoryConfig = path.toFile().getAbsolutePath() + "\\src\\main\\resources\\CARL\\ypostirizo_db-config.ttl";
-        System.out.println(strRepositoryConfig);
+        //System.out.println(strRepositoryConfig);
 //        Path path = Paths.get(".").toAbsolutePath().normalize();
 //        String newpath = path + "\\src\\main\\resources\\ipostirizo\\"+"ypostirizo_db_config.ttl";
 //        System.out.println("NEW PATH IS : ");
@@ -256,7 +256,7 @@ public class GraphDBConnection {
         String pwd = "k5ksxp10kk!";
         String encoding = Base64.getEncoder().encodeToString((user + ":" + pwd).getBytes());
         httpPost.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + encoding);
-        System.out.println("Executing Request " + httpPost.getRequestLine());
+        //System.out.println("Executing Request " + httpPost.getRequestLine());
 
         Path path = Paths.get(".").toAbsolutePath().normalize();
         // String strOntology = path.toFile().getAbsolutePath() + "\\src\\main\\resources\\CARL\\new_ontology_ipostirizo.ttl";
@@ -275,6 +275,7 @@ public class GraphDBConnection {
         CloseableHttpResponse response = client.execute(httpPost);
         StatusLine sl = response.getStatusLine();
         System.out.println("Request ended with code " + sl.getStatusCode());
+        System.out.println();
         //client.close();
 
     }

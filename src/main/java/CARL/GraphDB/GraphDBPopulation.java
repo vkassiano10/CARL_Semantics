@@ -197,11 +197,6 @@ public class GraphDBPopulation {
         String strInsert = BLANK_STRING;
         for (FitbitHourlySleepMeasurementComponent fitbitHourlySleepMeasurementComponent : fitbitHourlySleepMeasurementComponents) {
 
-            // EDW PREPEI NA FTIAXNEI QUERY GIA NA BAZEI TA STATEMENTS STI BASI, GIA KATHE fibaro Component.
-            // NA FTIAXOYME MIA SINARTISI STATIC POY NA PAIRNEI SAN ORISMA TO fibaroComponent, KAI NA EKTELEI TO SOSTO QUERY
-            //"<" + detectionURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_TBOX + "Detection" + ">
-         //   System.out.println("THE UNIQUE ID IS : " + fitbitHourlySleepMeasurementComponent.getId());
-
             String fitbitHourlySleepURI = Vocabulary.NAMESPACE_CARL + "FitbitHourlySleep_" + fitbitHourlySleepMeasurementComponent.getId();
             // TODO maybe change the Person_ to User_
             String personURI = Vocabulary.NAMESPACE_CARL + "Person_" + fitbitHourlySleepMeasurementComponent.getUser_id();

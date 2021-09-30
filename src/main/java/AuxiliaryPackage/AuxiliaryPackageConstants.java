@@ -53,6 +53,7 @@ public class AuxiliaryPackageConstants {
     public static int FITBIT_HOURLY_SLEEP_COMPONENT_COUNTER = 0;
     public static int FITBIT_HOURLY_STEPS_COMPONENT_COUNTER = 0;
     public static int FITBIT_HOURLY_HEART_RATE_COMPONENT_COUNTER = 0;
+    public static boolean DEBUG_MODE = true;
 
     public static SimpleDateFormat UTC_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 

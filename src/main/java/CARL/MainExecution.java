@@ -1,5 +1,6 @@
 package CARL;
 
+import AuxiliaryPackage.AuxiliaryPackageUtils;
 import CARL.Connectors.FibaroAPIConnector;
 import CARL.Connectors.FibaroWattAPIConnector;
 import CARL.Connectors.FitbitAPIConnector;
@@ -36,9 +37,8 @@ public class MainExecution {
         String graphDBServer = "http://160.40.49.192:89/";
         String repositoryId  = "mklab-ypostirizo_db";
 
-        logger.error("This is an ERROR example in Backlog framework");
+        //logger.error("This is an ERROR example in Backlog framework");
         logger.setLevel(Level.ERROR);
-
         // Retrieve the users from the proper file.
         List<User> users = addUsers();
         List<User> finalUsers = users;

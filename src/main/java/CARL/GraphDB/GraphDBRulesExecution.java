@@ -1,6 +1,7 @@
 package CARL.GraphDB;
 
 import CARL.entities.User;
+import AuxiliaryPackage.AuxiliaryPackageConstants;
 import org.eclipse.rdf4j.query.QueryLanguage;
 import org.eclipse.rdf4j.query.Update;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
@@ -59,6 +60,11 @@ public class GraphDBRulesExecution {
         queryString2 += "FILTER(?r1<2000.00) \n";
         queryString2 += "}";
 
+        if(AuxiliaryPackageConstants.DEBUG_MODE == true){
+            System.out.println("LACK OF MOVEMENT RULE: ");
+            System.out.println(queryString2);
+        }
+
         TupleQuery query = repositoryConnection.prepareTupleQuery(queryString2);
         TupleQueryResult result = query.evaluate();
 
@@ -72,7 +78,10 @@ public class GraphDBRulesExecution {
 
         }
 
-        System.out.println("LACK OF MOVEMENT PROBLEMS GENERATED : " + detectedSt.size());
+        if(AuxiliaryPackageConstants.DEBUG_MODE == true) {
+            System.out.println("LACK OF MOVEMENT PROBLEMS GENERATED : " + detectedSt.size());
+            System.out.println();
+        }
 
         String uniqueID = UUID.randomUUID().toString();
         for (int i = 0; i < detectedSt.size(); i++) {
@@ -561,6 +570,11 @@ public class GraphDBRulesExecution {
         queryString2 += "FILTER(?m1<300 && ?m1>0) \n";
         queryString2 += "}";
 
+        if(AuxiliaryPackageConstants.DEBUG_MODE == true) {
+            System.out.println("LACK OF SLEEP RULE: ");
+            System.out.println(queryString2);
+        }
+
         TupleQuery query = repositoryConnection.prepareTupleQuery(queryString2);
         TupleQueryResult result = query.evaluate();
         while (result.hasNext()) {
@@ -574,8 +588,12 @@ public class GraphDBRulesExecution {
             //System.out.println("?s = " + solution.getValue("s"));
         }
 
-        System.out.println("LACK OF SLEEP PROBLEMS GENERATED : " + detectedLoS.size());
-        detectedLoS.forEach(System.out::println);
+        if(AuxiliaryPackageConstants.DEBUG_MODE == true){
+            System.out.println("LACK OF SLEEP PROBLEMS GENERATED : " + detectedLoS.size());
+            System.out.println();
+        }
+
+        //detectedLoS.forEach(System.out::println);
         String uniqueID = "";
         for (int i = 0; i < detectedLoS.size(); i++) {
             uniqueID = detectedLoS.get(i);
@@ -597,7 +615,7 @@ public class GraphDBRulesExecution {
             queryString += "BIND(?m AS ?m1) \n";
             queryString += "}";
 
-            System.out.println(queryString);
+            //System.out.println(queryString);
 
             Update operation = repositoryConnection.prepareUpdate(QueryLanguage.SPARQL, queryString);
             operation.execute();
@@ -620,8 +638,15 @@ public class GraphDBRulesExecution {
         queryString2 += "?s CARL:dailyHeartRateRefersToPerson ?p. \n";
         queryString2 += "FILTER(?h1<75) \n";
         queryString2 += "}";
+
+        if(AuxiliaryPackageConstants.DEBUG_MODE == true) {
+            System.out.println("LOW HEARTRATE RULE: ");
+            System.out.println(queryString2);
+        }
+
         TupleQuery query = repositoryConnection.prepareTupleQuery(queryString2);
         TupleQueryResult result = query.evaluate();
+
         while (result.hasNext()) {
             BindingSet solution = result.next();
             // ... and print out the value of the variable binding for ?s and ?n
@@ -631,7 +656,11 @@ public class GraphDBRulesExecution {
             //System.out.println("?s = " + solution.getValue("s"));
         }
 
-        System.out.println("LOW HEARTRATE PROBLEMS GENERATED : " + detectedLHR.size());
+        if(AuxiliaryPackageConstants.DEBUG_MODE == true) {
+            System.out.println("LOW HEARTRATE PROBLEMS GENERATED : " + detectedLHR.size());
+            System.out.println();
+        }
+
 
         String uniqueID = "";
         for (int i = 0; i < detectedLHR.size(); i++) {
