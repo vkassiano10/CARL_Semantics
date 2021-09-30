@@ -1,0 +1,1757 @@
+@prefix : <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ypo: <http://localhost/resources/ipostirizo/new_ontology_yposthrizo#> .
+@prefix CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL> .
+
+<http://www.semanticweb.org/ITI/ontologies/2021/2/CARL> rdf:type owl:Ontology .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dateTime
+CARL:dateTime rdf:type owl:AnnotationProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#personid
+CARL:personid rdf:type owl:AnnotationProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#username
+CARL:username rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#activityDetectedBy
+CARL:activityDetectedBy rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf CARL:detectedBy ;
+                        owl:inverseOf CARL:detectsActivity .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#activityRefersToPerson
+CARL:activityRefersToPerson rdf:type owl:ObjectProperty ;
+                            rdfs:subPropertyOf CARL:refersToPerson ;
+                            owl:inverseOf CARL:hasActivity ;
+                            rdfs:domain CARL:Activity ;
+                            rdfs:range CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#containsDevice
+CARL:containsDevice rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:domain CARL:FibaroSensorMeasurement ;
+                    rdfs:range CARL:Device .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#containsRoom
+CARL:containsRoom rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf owl:topObjectProperty ;
+                  rdfs:domain CARL:FibaroSensorMeasurement ;
+                  rdfs:range CARL:Room .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#containsSection
+CARL:containsSection rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf owl:topObjectProperty ;
+                     rdfs:domain CARL:FibaroSensorMeasurement ;
+                     rdfs:range CARL:Section .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailyHeartRateRefersToPerson
+CARL:dailyHeartRateRefersToPerson rdf:type owl:ObjectProperty ;
+                                  rdfs:subPropertyOf owl:topObjectProperty ;
+                                  rdfs:domain CARL:DailyHeartRateMeasurement ;
+                                  rdfs:range CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailySleepRefersToPerson
+CARL:dailySleepRefersToPerson rdf:type owl:ObjectProperty ;
+                              rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+                              rdfs:range CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailyStepsReferToPerson
+CARL:dailyStepsReferToPerson rdf:type owl:ObjectProperty ;
+                             rdfs:subPropertyOf owl:topObjectProperty ;
+                             rdfs:domain CARL:DailyStepsMeasurement ;
+                             rdfs:range CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#detectedBy
+CARL:detectedBy rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                owl:inverseOf CARL:detects .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#detects
+CARL:detects rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:domain CARL:Device ;
+             rdfs:range CARL:Event .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#detectsActivity
+CARL:detectsActivity rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf CARL:detects ;
+                     rdfs:domain CARL:Device ;
+                     rdfs:range CARL:Activity .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#detectsMeasurement
+CARL:detectsMeasurement rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf CARL:detects ;
+                        owl:inverseOf CARL:measurementDetectedBy ;
+                        rdfs:domain CARL:Device ;
+                        rdfs:range CARL:FitbitSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasActivity
+CARL:hasActivity rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf CARL:hasEvent .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasEvent
+CARL:hasEvent rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              owl:inverseOf CARL:refersToPerson ;
+              rdfs:domain CARL:Device .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasFibaroDevice
+CARL:hasFibaroDevice rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf owl:topObjectProperty ;
+                     owl:inverseOf CARL:isInRoom ;
+                     rdfs:domain CARL:Room ;
+                     rdfs:range CARL:FibaroDevice .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasFibaroSensorMeasurement
+CARL:hasFibaroSensorMeasurement rdf:type owl:ObjectProperty ;
+                                rdfs:subPropertyOf owl:topObjectProperty ;
+                                rdfs:domain CARL:FibaroTemperatureSensor ;
+                                rdfs:range CARL:FibaroSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasHealthProblem
+CARL:hasHealthProblem rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf owl:topObjectProperty ;
+                      rdfs:domain CARL:Person ;
+                      rdfs:range CARL:HealthProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasHeartRateProblem
+CARL:hasHeartRateProblem rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf owl:topObjectProperty ;
+                         rdfs:domain CARL:Person ;
+                         rdfs:range CARL:HeartProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasMeasurement
+CARL:hasMeasurement rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf CARL:hasEvent ;
+                    owl:inverseOf CARL:measurementRefersToPerson .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasMovementProblem
+CARL:hasMovementProblem rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf owl:topObjectProperty ;
+                        rdfs:domain CARL:Person ;
+                        rdfs:range CARL:MovementProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasProfile
+CARL:hasProfile rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdfs:domain CARL:Patient ;
+                rdfs:range CARL:Profile .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasRoom
+CARL:hasRoom rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             owl:inverseOf CARL:isInSection ;
+             rdfs:domain CARL:Section ;
+             rdfs:range CARL:Room .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasSleepProblem
+CARL:hasSleepProblem rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf owl:topObjectProperty ;
+                     rdfs:domain CARL:Person ;
+                     rdfs:range CARL:SleepProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasTriggeryFact
+CARL:hasTriggeryFact rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf owl:topObjectProperty ;
+                     rdfs:domain CARL:Person ;
+                     rdfs:range CARL:TriggeringFactor .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasUser
+CARL:hasUser rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:domain CARL:FibaroSensorMeasurement ;
+             rdfs:range CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hourlyHeartrateRefersToPerson
+CARL:hourlyHeartrateRefersToPerson rdf:type owl:ObjectProperty ;
+                                   rdfs:subPropertyOf owl:topObjectProperty ;
+                                   rdfs:range CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hourlySleepRefersToPerson
+CARL:hourlySleepRefersToPerson rdf:type owl:ObjectProperty ;
+                               rdfs:subPropertyOf owl:topObjectProperty ;
+                               rdfs:range CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hourlyStepsReferToPerson
+CARL:hourlyStepsReferToPerson rdf:type owl:ObjectProperty ;
+                              rdfs:subPropertyOf owl:topObjectProperty ;
+                              rdfs:range CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#increasedNappingRefersToPerson
+CARL:increasedNappingRefersToPerson rdf:type owl:ObjectProperty ;
+                                    rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#isInRoom
+CARL:isInRoom rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdfs:domain CARL:FibaroDevice ;
+              rdfs:range CARL:Room .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#isInSection
+CARL:isInSection rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf owl:topObjectProperty ;
+                 rdfs:domain CARL:Room ;
+                 rdfs:range CARL:Section .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#measurementDetectedBy
+CARL:measurementDetectedBy rdf:type owl:ObjectProperty ;
+                           rdfs:subPropertyOf CARL:detectedBy .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#measurementRefersToPerson
+CARL:measurementRefersToPerson rdf:type owl:ObjectProperty ;
+                               rdfs:subPropertyOf CARL:refersToPerson ;
+                               rdfs:domain CARL:FitbitSensorMeasurement ;
+                               rdfs:range CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#napEndTimeCloseToSleepStartTimeObjectRefersToPerson
+CARL:napEndTimeCloseToSleepStartTimeObjectRefersToPerson rdf:type owl:ObjectProperty ;
+                                                         rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#napEndTimeCloseToSleepStartTimeProblemRefersToPerson
+CARL:napEndTimeCloseToSleepStartTimeProblemRefersToPerson rdf:type owl:ObjectProperty ;
+                                                          rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#numberOfAsleepInNapsCountRefersToPerson
+CARL:numberOfAsleepInNapsCountRefersToPerson rdf:type owl:ObjectProperty ;
+                                             rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#ownedBy
+CARL:ownedBy rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             owl:inverseOf CARL:ownsDevice .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#ownsDevice
+CARL:ownsDevice rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdfs:domain CARL:Person ;
+                rdfs:range CARL:Device .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#receivesWarning
+CARL:receivesWarning rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf owl:topObjectProperty ;
+                     rdfs:domain CARL:Person ;
+                     rdfs:range CARL:Warning .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#refersToPerson
+CARL:refersToPerson rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:domain CARL:Event ;
+                    rdfs:range CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#sendAlert
+CARL:sendAlert rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain CARL:Device ;
+               rdfs:range CARL:Alert .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#sleepStageRefersToHourlySleepMeasurement
+CARL:sleepStageRefersToHourlySleepMeasurement rdf:type owl:ObjectProperty ;
+                                              rdfs:subPropertyOf owl:topObjectProperty ;
+                                              rdfs:domain CARL:SleepStage ;
+                                              rdfs:range CARL:FitbitDailySleepSensorMeasurement .
+
+
+###  http://www.w3.org/2002/07/owl#topObjectProperty
+owl:topObjectProperty rdfs:domain CARL:Device ;
+                      rdfs:range CARL:Person .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#NapEndTimeCloseToSleepStartTimeObject
+CARL:NapEndTimeCloseToSleepStartTimeObject rdf:type owl:DatatypeProperty ;
+                                           rdfs:subPropertyOf owl:topDataProperty ;
+                                           rdfs:domain CARL:NapEndTimeCloseToSleepStartTimeObject .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#NumberOfAsleepInNapsCount
+CARL:NumberOfAsleepInNapsCount rdf:type owl:DatatypeProperty ;
+                               rdfs:subPropertyOf owl:topDataProperty ;
+                               rdfs:domain CARL:NumberOfAsleepInNapsCount .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#activityCalories
+CARL:activityCalories rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf CARL:dailyStepsMeasurements ;
+                      rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#adDiagnosis
+CARL:adDiagnosis rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain CARL:AD .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#age
+CARL:age rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain CARL:Age ;
+         rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#amnesticMultipleDomanins
+CARL:amnesticMultipleDomanins rdf:type owl:DatatypeProperty ;
+                              rdfs:subPropertyOf CARL:mciDiagnosis .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#amnesticSingle
+CARL:amnesticSingle rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf CARL:mciDiagnosis .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#anesthesia
+CARL:anesthesia rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf CARL:triggeringFactorType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#anxiety
+CARL:anxiety rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf CARL:firstSymptomType ,
+                                CARL:otherMedicalProblems ;
+             rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#arrythmia
+CARL:arrythmia rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#asleepCount
+CARL:asleepCount rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf CARL:dailySleepMeasurements ;
+                 rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+                 rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#asleepStageDuration
+CARL:asleepStageDuration rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#asleep_minutes
+CARL:asleep_minutes rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf CARL:dailySleepMeasurements ;
+                    rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+                    rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#awakeStageDuration
+CARL:awakeStageDuration rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#awake_count
+CARL:awake_count rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf CARL:dailySleepMeasurements ;
+                 rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#awake_minutes
+CARL:awake_minutes rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf CARL:dailySleepMeasurements ;
+                   rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#behavioralDisturbances
+CARL:behavioralDisturbances rdf:type owl:DatatypeProperty ;
+                            rdfs:subPropertyOf CARL:firstSymptomType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#calories
+CARL:calories rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf CARL:dailyStepsMeasurements ;
+              rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#cancer
+CARL:cancer rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#cardio
+CARL:cardio rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf CARL:dailyHeartrateMeasurements ;
+            rdfs:domain CARL:DailyHeartRateMeasurement ;
+            rdfs:range xsd:double .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#cardiovascular
+CARL:cardiovascular rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#cholesterol
+CARL:cholesterol rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#chronicStress
+CARL:chronicStress rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf CARL:triggeringFactorType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailyHeartRateDatetime
+CARL:dailyHeartRateDatetime rdf:type owl:DatatypeProperty ;
+                            rdfs:subPropertyOf CARL:dailyHeartrateMeasurements ;
+                            rdfs:domain CARL:DailyHeartRateMeasurement ;
+                            rdfs:range xsd:dateTimeStamp .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailyHeartRateId
+CARL:dailyHeartRateId rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf CARL:dailyHeartrateMeasurements ;
+                      rdfs:domain CARL:DailyHeartRateMeasurement ;
+                      rdfs:range xsd:double .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailyHeartrateMeasurements
+CARL:dailyHeartrateMeasurements rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf owl:topDataProperty ;
+                                rdfs:domain CARL:DailyHeartRateMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailySleepMeasurements
+CARL:dailySleepMeasurements rdf:type owl:DatatypeProperty ;
+                            rdfs:subPropertyOf owl:topDataProperty ;
+                            rdfs:domain CARL:FitbitDailySleepSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailyStepsDatetime
+CARL:dailyStepsDatetime rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf CARL:dailyStepsMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailyStepsMeasurements
+CARL:dailyStepsMeasurements rdf:type owl:DatatypeProperty ;
+                            rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#datetimeDailySleep
+CARL:datetimeDailySleep rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#datetimeHourlyHeartRate
+CARL:datetimeHourlyHeartRate rdf:type owl:DatatypeProperty ;
+                             rdfs:subPropertyOf CARL:hourlyHeartrateMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#datetimeHourlySleep
+CARL:datetimeHourlySleep rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf CARL:hourlySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#datetimeHourlySteps
+CARL:datetimeHourlySteps rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf CARL:hourlyStepsMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#deathOfRelative
+CARL:deathOfRelative rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf CARL:triggeringFactorType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#deepStageDuration
+CARL:deepStageDuration rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#deep_count
+CARL:deep_count rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#deep_minutes
+CARL:deep_minutes rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#depression
+CARL:depression rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf CARL:firstSymptomType ,
+                                   CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#deviceID
+CARL:deviceID rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain CARL:Device ;
+              rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#diabetesMelitus
+CARL:diabetesMelitus rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#disorientation
+CARL:disorientation rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf CARL:firstSymptomType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#distance
+CARL:distance rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf CARL:dailyStepsMeasurements ;
+              rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#duration
+CARL:duration rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf CARL:dailySleepMeasurements ,
+                                 CARL:hourlySleepMeasurements ;
+              rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+              rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#efficiency
+CARL:efficiency rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf CARL:dailySleepMeasurements ,
+                                   CARL:hourlySleepMeasurements ;
+                rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+                rdfs:range xsd:float .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#elevation
+CARL:elevation rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf CARL:dailyStepsMeasurements ;
+               rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#endTime
+CARL:endTime rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf CARL:hourlySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#eventDuration
+CARL:eventDuration rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain CARL:Event ;
+                   rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#eventEndTime
+CARL:eventEndTime rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdfs:domain CARL:Event ;
+                  rdfs:range xsd:dateTimeStamp .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#eventStartTime
+CARL:eventStartTime rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain CARL:Event ;
+                    rdfs:range xsd:dateTimeStamp .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#fatBurn
+CARL:fatBurn rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf CARL:dailyHeartrateMeasurements ;
+             rdfs:domain CARL:DailyHeartRateMeasurement ;
+             rdfs:range xsd:double .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#female
+CARL:female rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain CARL:Gender ;
+            rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#fibaroSensorMeasurementId
+CARL:fibaroSensorMeasurementId rdf:type owl:DatatypeProperty ;
+                               rdfs:subPropertyOf owl:topDataProperty ;
+                               rdfs:domain CARL:FibaroSensorMeasurement ;
+                               rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#fibaroTemperatureSensorId
+CARL:fibaroTemperatureSensorId rdf:type owl:DatatypeProperty ;
+                               rdfs:subPropertyOf owl:topDataProperty ;
+                               rdfs:domain CARL:FibaroTemperatureSensor ;
+                               rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#fibaroTemperatureSensorName
+CARL:fibaroTemperatureSensorName rdf:type owl:DatatypeProperty ;
+                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                 rdfs:domain CARL:FibaroTemperatureSensor ;
+                                 rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#firstSymptomType
+CARL:firstSymptomType rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf owl:topDataProperty ;
+                      rdfs:domain CARL:FirstSymptom .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#floors
+CARL:floors rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf CARL:dailyStepsMeasurements ;
+            rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#highBloodPressure
+CARL:highBloodPressure rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hourlyHeartrateMeasurements
+CARL:hourlyHeartrateMeasurements rdf:type owl:DatatypeProperty ;
+                                 rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hourlySleepMeasurements
+CARL:hourlySleepMeasurements rdf:type owl:DatatypeProperty ;
+                             rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hourlyStepsMeasurements
+CARL:hourlyStepsMeasurements rdf:type owl:DatatypeProperty ;
+                             rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#insomnia
+CARL:insomnia rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf CARL:firstSymptomType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#isMainSleep
+CARL:isMainSleep rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf CARL:hourlySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#lackOfExercise
+CARL:lackOfExercise rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf CARL:firstSymptomType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#lackOfMovementDatetime
+CARL:lackOfMovementDatetime rdf:type owl:DatatypeProperty ;
+                            rdfs:subPropertyOf owl:topDataProperty ;
+                            rdfs:domain CARL:LackOfMovement ;
+                            rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#lackOfMovementRate
+CARL:lackOfMovementRate rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf owl:topDataProperty ;
+                        rdfs:domain CARL:LackOfMovement ;
+                        rdfs:range xsd:double .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#lackOfSleep
+CARL:lackOfSleep rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf CARL:firstSymptomType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#lackOfSleepProperties
+CARL:lackOfSleepProperties rdf:type owl:DatatypeProperty ;
+                           rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#lackOfSleep_DateTime
+CARL:lackOfSleep_DateTime rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf CARL:lackOfSleepProperties ;
+                          rdfs:domain CARL:LackOfSleep ;
+                          rdfs:range xsd:dateTimeStamp .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#lackOfSleep_minutes_a_sleep
+CARL:lackOfSleep_minutes_a_sleep rdf:type owl:DatatypeProperty ;
+                                 rdfs:subPropertyOf CARL:lackOfSleepProperties ;
+                                 rdfs:domain CARL:LackOfSleep ;
+                                 rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#lifeThreat
+CARL:lifeThreat rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf CARL:triggeringFactorType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#lightStageDuration
+CARL:lightStageDuration rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#light_count
+CARL:light_count rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#light_minutes
+CARL:light_minutes rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#lowHeartRateProblemDatetime
+CARL:lowHeartRateProblemDatetime rdf:type owl:DatatypeProperty ;
+                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                 rdfs:domain CARL:LowHeartRateProblem ;
+                                 rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#lowHeartRateValue
+CARL:lowHeartRateValue rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf owl:topDataProperty ;
+                       rdfs:domain CARL:LowHeartRateProblem ;
+                       rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#male
+CARL:male rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain CARL:Gender ;
+          rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#mciDiagnosis
+CARL:mciDiagnosis rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdfs:domain CARL:MCI .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#memory
+CARL:memory rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf CARL:firstSymptomType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#mild
+CARL:mild rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf CARL:adDiagnosis .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#minAfterWakeUp
+CARL:minAfterWakeUp rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf CARL:hourlySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#minAsleep
+CARL:minAsleep rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf CARL:hourlySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#minAwake
+CARL:minAwake rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf CARL:hourlySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#minToAsleep
+CARL:minToAsleep rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf CARL:hourlySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#minutes
+CARL:minutes rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf CARL:dailyStepsMeasurements ;
+             rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#minutesAfterWakeUp
+CARL:minutesAfterWakeUp rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#minutesToFallAsleep
+CARL:minutesToFallAsleep rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#minutes_a_sleep
+CARL:minutes_a_sleep rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#minutes_awake
+CARL:minutes_awake rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#moderate
+CARL:moderate rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf CARL:adDiagnosis .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#myasthenia
+CARL:myasthenia rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#napEndTimeCloseToSleepStartTime
+CARL:napEndTimeCloseToSleepStartTime rdf:type owl:DatatypeProperty ;
+                                     rdfs:subPropertyOf CARL:NapEndTimeCloseToSleepStartTimeObject ;
+                                     rdfs:range xsd:boolean .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#napEndTimeCloseToSleepStartTimeDateTime
+CARL:napEndTimeCloseToSleepStartTimeDateTime rdf:type owl:DatatypeProperty ;
+                                             rdfs:subPropertyOf CARL:NapEndTimeCloseToSleepStartTimeObject ;
+                                             rdfs:range xsd:dateTimeStamp .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#neurologicalProblems
+CARL:neurologicalProblems rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#newValue
+CARL:newValue rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain CARL:FibaroSensorMeasurement ;
+              rdfs:range xsd:float .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#nonAmnesticMultipleDomains
+CARL:nonAmnesticMultipleDomains rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf CARL:mciDiagnosis .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#nonAmnesticSIngle
+CARL:nonAmnesticSIngle rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf CARL:mciDiagnosis .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#numberOfAsleepInNaps
+CARL:numberOfAsleepInNaps rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf CARL:NumberOfAsleepInNapsCount ;
+                          rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#numberOfAsleepInNapsDateTime
+CARL:numberOfAsleepInNapsDateTime rdf:type owl:DatatypeProperty ;
+                                  rdfs:subPropertyOf CARL:NumberOfAsleepInNapsCount ;
+                                  rdfs:range xsd:dateTimeStamp .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#numberOfSurgeriesWithAnesthesia
+CARL:numberOfSurgeriesWithAnesthesia rdf:type owl:DatatypeProperty ;
+                                     rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#oldValue
+CARL:oldValue rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain CARL:FibaroSensorMeasurement ;
+              rdfs:range xsd:float .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#otherMedicalProblems
+CARL:otherMedicalProblems rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf owl:topDataProperty ;
+                          rdfs:domain CARL:OtherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#otherPsychiatricCondition
+CARL:otherPsychiatricCondition rdf:type owl:DatatypeProperty ;
+                               rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#peak
+CARL:peak rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf CARL:dailyHeartrateMeasurements ;
+          rdfs:domain CARL:DailyHeartRateMeasurement ;
+          rdfs:range xsd:double .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#personId
+CARL:personId rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain CARL:Person ;
+              rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#previousMedicalCondition
+CARL:previousMedicalCondition rdf:type owl:DatatypeProperty ;
+                              rdfs:subPropertyOf CARL:triggeringFactorType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#primary
+CARL:primary rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain CARL:Education .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#rate
+CARL:rate rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf CARL:dailyStepsMeasurements ,
+                             CARL:hourlyStepsMeasurements ,
+                             owl:topDataProperty ;
+          rdfs:domain CARL:DailyStepsMeasurement ;
+          rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#remStageDuration
+CARL:remStageDuration rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#rem_count
+CARL:rem_count rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#rem_minutes
+CARL:rem_minutes rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#restingHeartRate
+CARL:restingHeartRate rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf CARL:dailyHeartrateMeasurements ;
+                      rdfs:domain CARL:DailyHeartRateMeasurement ;
+                      rdfs:range xsd:double .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#resting_hr
+CARL:resting_hr rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf CARL:hourlyHeartrateMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#restlessCount
+CARL:restlessCount rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#restlessStageDuration
+CARL:restlessStageDuration rdf:type owl:DatatypeProperty ;
+                           rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#restless_minutes
+CARL:restless_minutes rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#roomId
+CARL:roomId rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain CARL:Room ;
+            rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#roomName
+CARL:roomName rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain CARL:Room ;
+              rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#secondary
+CARL:secondary rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain CARL:Education .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#sectionId
+CARL:sectionId rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain CARL:Section ;
+               rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#sectionName
+CARL:sectionName rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain CARL:Section ;
+                 rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#severe
+CARL:severe rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf CARL:adDiagnosis .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#startTime
+CARL:startTime rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf CARL:hourlySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#steps
+CARL:steps rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf CARL:dailyStepsMeasurements ;
+           rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#stroke
+CARL:stroke rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#tertiary
+CARL:tertiary rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain CARL:Education .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#timeInBed
+CARL:timeInBed rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#timeToFallAsleep
+CARL:timeToFallAsleep rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf CARL:dailySleepMeasurements ;
+                      rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+                      rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#timestamp
+CARL:timestamp rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain CARL:FibaroSensorMeasurement ;
+               rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#traumaticBrainInjury
+CARL:traumaticBrainInjury rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf CARL:otherMedicalProblems .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#triggeringFactorType
+CARL:triggeringFactorType rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#type
+CARL:type rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf CARL:hourlySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#unemployment
+CARL:unemployment rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf CARL:triggeringFactorType .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#wakeStageDuration
+CARL:wakeStageDuration rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#wake_count
+CARL:wake_count rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#wake_minutes
+CARL:wake_minutes rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf CARL:dailySleepMeasurements .
+
+
+###  http://www.w3.org/2002/07/owl#dateTime
+owl:dateTime rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain CARL:DailyStepsMeasurement .
+
+
+###  http://www.w3.org/2002/07/owl#deviceStatus
+owl:deviceStatus rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain CARL:Device ;
+                 rdfs:range xsd:string .
+
+
+###  http://www.w3.org/2002/07/owl#hasDesc
+owl:hasDesc rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( CARL:Alert
+                                        CARL:Warning
+                                      )
+                        ] ;
+            rdfs:range xsd:string .
+
+
+###  http://www.w3.org/2002/07/owl#hasProblem
+owl:hasProblem rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain CARL:Patient ;
+               rdfs:range xsd:string .
+
+
+###  http://www.w3.org/2002/07/owl#outOfRange
+owl:outOfRange rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf CARL:dailyHeartrateMeasurements ;
+               rdfs:domain CARL:DailyHeartRateMeasurement ;
+               rdfs:range xsd:double .
+
+
+###  http://www.w3.org/2002/07/owl#token
+owl:token rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain CARL:Patient ;
+          rdfs:range xsd:string .
+
+
+###  http://www.w3.org/2002/07/owl#username
+owl:username rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain CARL:Patient ;
+             rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#AD
+CARL:AD rdf:type owl:Class ;
+        rdfs:subClassOf CARL:Diagnosis .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Activity
+CARL:Activity rdf:type owl:Class ;
+              rdfs:subClassOf CARL:Event .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Age
+CARL:Age rdf:type owl:Class ;
+         rdfs:subClassOf CARL:Profile .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Alert
+CARL:Alert rdf:type owl:Class ;
+           rdfs:subClassOf CARL:Output .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Apnea
+CARL:Apnea rdf:type owl:Class ;
+           rdfs:subClassOf CARL:SleepProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#BAI
+CARL:BAI rdf:type owl:Class ;
+         rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#BDI
+CARL:BDI rdf:type owl:Class ;
+         rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#BadQualityofSleep
+CARL:BadQualityofSleep rdf:type owl:Class ;
+                       rdfs:subClassOf CARL:SleepProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Calories
+CARL:Calories rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#DailyHeartRateMeasurement
+CARL:DailyHeartRateMeasurement rdf:type owl:Class ;
+                               rdfs:subClassOf CARL:FitbitSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#DailyStepsMeasurement
+CARL:DailyStepsMeasurement rdf:type owl:Class ;
+                           rdfs:subClassOf CARL:FitbitSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Device
+CARL:Device rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Diagnosis
+CARL:Diagnosis rdf:type owl:Class ;
+               rdfs:subClassOf CARL:Profile .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Doctor
+CARL:Doctor rdf:type owl:Class ;
+            rdfs:subClassOf CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Education
+CARL:Education rdf:type owl:Class ;
+               rdfs:subClassOf CARL:Profile .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Event
+CARL:Event rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#FRSSD
+CARL:FRSSD rdf:type owl:Class ;
+           rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#FUCAS
+CARL:FUCAS rdf:type owl:Class ;
+           rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#FibaroDevice
+CARL:FibaroDevice rdf:type owl:Class ;
+                  rdfs:subClassOf CARL:Device .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#FibaroSensorMeasurement
+CARL:FibaroSensorMeasurement rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#FibaroTemperatureSensor
+CARL:FibaroTemperatureSensor rdf:type owl:Class ;
+                             rdfs:subClassOf CARL:FibaroDevice .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#FirstSymptom
+CARL:FirstSymptom rdf:type owl:Class ;
+                  rdfs:subClassOf CARL:Profile .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#FitbitDailySleepSensorMeasurement
+CARL:FitbitDailySleepSensorMeasurement rdf:type owl:Class ;
+                                       rdfs:subClassOf CARL:FitbitSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#FitbitSensorMeasurement
+CARL:FitbitSensorMeasurement rdf:type owl:Class ;
+                             rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#GDS
+CARL:GDS rdf:type owl:Class ;
+         rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Gender
+CARL:Gender rdf:type owl:Class ;
+            rdfs:subClassOf CARL:Profile .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Giddoness
+CARL:Giddoness rdf:type owl:Class ;
+               rdfs:subClassOf CARL:MovementProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#HamiltonDepressionScale
+CARL:HamiltonDepressionScale rdf:type owl:Class ;
+                             rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#HealthProblem
+CARL:HealthProblem rdf:type owl:Class ;
+                   rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Healthy
+CARL:Healthy rdf:type owl:Class ;
+             rdfs:subClassOf CARL:Diagnosis .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#HeartProblem
+CARL:HeartProblem rdf:type owl:Class ;
+                  rdfs:subClassOf CARL:HealthProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#HourlyHeartrateMeasurement
+CARL:HourlyHeartrateMeasurement rdf:type owl:Class ;
+                                rdfs:subClassOf CARL:FitbitSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#HourlySleepMeasurement
+CARL:HourlySleepMeasurement rdf:type owl:Class ;
+                            rdfs:subClassOf CARL:FitbitSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#HourlyStepsMeasurement
+CARL:HourlyStepsMeasurement rdf:type owl:Class ;
+                            rdfs:subClassOf CARL:FitbitSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#IncreasedNapping
+CARL:IncreasedNapping rdf:type owl:Class ;
+                      rdfs:subClassOf CARL:SleepProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Insomnia
+CARL:Insomnia rdf:type owl:Class ;
+              rdfs:subClassOf CARL:SleepProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#LackOfMovement
+CARL:LackOfMovement rdf:type owl:Class ;
+                    rdfs:subClassOf CARL:MovementProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#LackOfSleep
+CARL:LackOfSleep rdf:type owl:Class ;
+                 rdfs:subClassOf CARL:SleepProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#LowHeartRateProblem
+CARL:LowHeartRateProblem rdf:type owl:Class ;
+                         rdfs:subClassOf CARL:HeartProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#MCI
+CARL:MCI rdf:type owl:Class ;
+         rdfs:subClassOf CARL:Diagnosis .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#MMSE
+CARL:MMSE rdf:type owl:Class ;
+          rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Medication
+CARL:Medication rdf:type owl:Class ;
+                rdfs:subClassOf CARL:Profile .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Message
+CARL:Message rdf:type owl:Class ;
+             rdfs:subClassOf CARL:Output .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#MoCa
+CARL:MoCa rdf:type owl:Class ;
+          rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#MovementProblem
+CARL:MovementProblem rdf:type owl:Class ;
+                     rdfs:subClassOf CARL:HealthProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#MultiProblem
+CARL:MultiProblem rdf:type owl:Class ;
+                  rdfs:subClassOf CARL:HealthProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#NPI
+CARL:NPI rdf:type owl:Class ;
+         rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#NapEndTimeCloseToSleepStartTimeObject
+CARL:NapEndTimeCloseToSleepStartTimeObject rdf:type owl:Class ;
+                                           rdfs:subClassOf CARL:FitbitSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#NapEndTimeCloseToSleepStartTimeProblem
+CARL:NapEndTimeCloseToSleepStartTimeProblem rdf:type owl:Class ;
+                                            rdfs:subClassOf CARL:SleepProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Narcolepsy
+CARL:Narcolepsy rdf:type owl:Class ;
+                rdfs:subClassOf CARL:SleepProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#NeuropsychologicalTests
+CARL:NeuropsychologicalTests rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#NumberOfAsleepInNapsCount
+CARL:NumberOfAsleepInNapsCount rdf:type owl:Class ;
+                               rdfs:subClassOf CARL:FitbitSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#OtherMedicalProblems
+CARL:OtherMedicalProblems rdf:type owl:Class ;
+                          rdfs:subClassOf CARL:Profile .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Output
+CARL:Output rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#PSS
+CARL:PSS rdf:type owl:Class ;
+         rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Patient
+CARL:Patient rdf:type owl:Class ;
+             rdfs:subClassOf CARL:Person .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Person
+CARL:Person rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Profile
+CARL:Profile rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#RAVLT
+CARL:RAVLT rdf:type owl:Class ;
+           rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#ROCFT
+CARL:ROCFT rdf:type owl:Class ;
+           rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Restlessness
+CARL:Restlessness rdf:type owl:Class ;
+                  rdfs:subClassOf CARL:SleepProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Room
+CARL:Room rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#SCD
+CARL:SCD rdf:type owl:Class ;
+         rdfs:subClassOf CARL:Diagnosis .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Section
+CARL:Section rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#SleepProblem
+CARL:SleepProblem rdf:type owl:Class ;
+                  rdfs:subClassOf CARL:HealthProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#SleepStage
+CARL:SleepStage rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Stress
+CARL:Stress rdf:type owl:Class ;
+            rdfs:subClassOf CARL:MultiProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#TEA
+CARL:TEA rdf:type owl:Class ;
+         rdfs:subClassOf CARL:NeuropsychologicalTests .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Tremor
+CARL:Tremor rdf:type owl:Class ;
+            rdfs:subClassOf CARL:MovementProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#TriggeringFactor
+CARL:TriggeringFactor rdf:type owl:Class ;
+                      rdfs:subClassOf CARL:Profile .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#UnstableWalking
+CARL:UnstableWalking rdf:type owl:Class ;
+                     rdfs:subClassOf CARL:MovementProblem .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Warning
+CARL:Warning rdf:type owl:Class ;
+             rdfs:subClassOf CARL:Output .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Device_1
+CARL:Device_1 rdf:type owl:NamedIndividual ,
+                       CARL:Device ;
+              CARL:hasEvent CARL:Event_1 .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Event_1
+CARL:Event_1 rdf:type owl:NamedIndividual ,
+                      CARL:Event ;
+             CARL:eventEndTime "2020-06-04T13:24:07.245+03:00"^^xsd:dateTimeStamp ;
+             CARL:eventStartTime "2020-04-12T13:20:00-05:00"^^xsd:dateTimeStamp .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#HealthProblem_1
+CARL:HealthProblem_1 rdf:type owl:NamedIndividual ,
+                              CARL:HealthProblem ;
+                     CARL:deathOfRelative "test" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#HeartRate_1
+CARL:HeartRate_1 rdf:type owl:NamedIndividual ,
+                          CARL:DailyHeartRateMeasurement ;
+                 CARL:refersToPerson CARL:Person_K1 ;
+                 CARL:dailyHeartRateId "100.0"^^xsd:double ;
+                 owl:outOfRange "1.0"^^xsd:double .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#HeartRate_2
+CARL:HeartRate_2 rdf:type owl:NamedIndividual ,
+                          CARL:DailyHeartRateMeasurement ;
+                 CARL:refersToPerson CARL:Person_K2 ;
+                 CARL:dailyHeartRateId "12.0"^^xsd:double ;
+                 owl:outOfRange "1.0"^^xsd:double .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#HeartRate_3
+CARL:HeartRate_3 rdf:type owl:NamedIndividual ,
+                          CARL:DailyHeartRateMeasurement ;
+                 CARL:dailyHeartRateRefersToPerson CARL:Person_K2 .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Movement_1
+CARL:Movement_1 rdf:type owl:NamedIndividual ;
+                CARL:minutes "10"^^xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Person_2
+CARL:Person_2 rdf:type owl:NamedIndividual ,
+                       CARL:Patient ,
+                       CARL:Person ;
+              CARL:age "90"^^xsd:int ;
+              CARL:personid "2"^^xsd:int ;
+              CARL:username "Vasilis" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Person_K1
+CARL:Person_K1 rdf:type owl:NamedIndividual ,
+                        CARL:Person ;
+               CARL:receivesWarning CARL:Warning_1 ;
+               CARL:age 100 ;
+               CARL:anxiety 200 ;
+               CARL:asleep_minutes "600"^^xsd:int ;
+               CARL:awake_count 200 ;
+               CARL:awake_minutes 100 ;
+               CARL:cardio "100.0"^^xsd:double ;
+               CARL:duration "500"^^xsd:int ;
+               CARL:steps "30"^^xsd:int ;
+               owl:hasProblem "test1" ,
+                              "test2" ;
+               rdfs:label "Petrou" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Person_K10
+CARL:Person_K10 rdf:type owl:NamedIndividual ,
+                         CARL:Person ;
+                CARL:anxiety "0" ;
+                CARL:awake_count "2" ;
+                CARL:awake_minutes "0" ;
+                CARL:cardio "70.0"^^xsd:double ;
+                CARL:duration "400"^^xsd:int ;
+                CARL:steps "150"^^xsd:int ;
+                owl:hasProblem "problem1" ,
+                               "problem2" ,
+                               "problem3" ;
+                rdfs:label "Andreadis" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Person_K2
+CARL:Person_K2 rdf:type owl:NamedIndividual ,
+                        CARL:Person ;
+               CARL:age 89 ;
+               CARL:anxiety "0" ;
+               CARL:awake_count "1" ;
+               CARL:awake_minutes "0" ;
+               CARL:cardio "95.0"^^xsd:double ;
+               CARL:duration "300"^^xsd:int ;
+               CARL:steps "32"^^xsd:int ;
+               owl:hasProblem "problem1" ,
+                              "problem2" ,
+                              "problem3" ;
+               rdfs:label "Andreou" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Person_K3
+CARL:Person_K3 rdf:type owl:NamedIndividual ,
+                        CARL:Person ;
+               CARL:age 75 ;
+               CARL:anxiety "0" ;
+               CARL:asleep_minutes "700"^^xsd:int ;
+               CARL:awake_count "2" ;
+               CARL:awake_minutes "0" ;
+               CARL:cardio "93.0"^^xsd:double ;
+               CARL:duration "600"^^xsd:int ;
+               CARL:steps "44"^^xsd:int ;
+               rdfs:label "Papadopoulos" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Person_K4
+CARL:Person_K4 rdf:type owl:NamedIndividual ,
+                        CARL:Person ;
+               CARL:age 75 ;
+               CARL:anxiety "0" ;
+               CARL:asleep_minutes "700"^^xsd:int ;
+               CARL:awake_count "7" ;
+               CARL:awake_minutes "0" ;
+               CARL:cardio "50.0"^^xsd:double ;
+               CARL:duration "700"^^xsd:int ;
+               CARL:steps "30"^^xsd:int ;
+               rdfs:label "Papadopoulos" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Person_K5
+CARL:Person_K5 rdf:type owl:NamedIndividual ,
+                        CARL:Person ;
+               CARL:age 75 ;
+               CARL:asleep_minutes "700"^^xsd:int ;
+               CARL:cardio "50.0"^^xsd:double ;
+               CARL:duration "200"^^xsd:int ;
+               CARL:steps "34"^^xsd:int ;
+               rdfs:label "Mihailidis" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Person_K6
+CARL:Person_K6 rdf:type owl:NamedIndividual ,
+                        CARL:Person ;
+               CARL:age 75 ;
+               CARL:anxiety "0" ;
+               CARL:asleep_minutes "700"^^xsd:int ;
+               CARL:awake_count "1" ;
+               CARL:awake_minutes "0" ;
+               CARL:cardio "50.0"^^xsd:double ;
+               CARL:duration "100"^^xsd:int ;
+               CARL:steps "30"^^xsd:int ;
+               rdfs:label "Papadopoulos" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Person_K7
+CARL:Person_K7 rdf:type owl:NamedIndividual ,
+                        CARL:Person ;
+               CARL:age 89 ;
+               CARL:cardio "110.0"^^xsd:double ;
+               CARL:duration "100"^^xsd:int ;
+               CARL:steps "39"^^xsd:int ;
+               owl:hasProblem "problem1" ,
+                              "problem2" ,
+                              "problem3" ;
+               rdfs:label "Paulou" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Person_K9
+CARL:Person_K9 rdf:type owl:NamedIndividual ,
+                        CARL:Person ;
+               CARL:age 89 ;
+               CARL:duration "900"^^xsd:int ;
+               CARL:steps "150"^^xsd:int ;
+               owl:hasProblem "problem1" ,
+                              "problem2" ,
+                              "problem3" ;
+               rdfs:label "Tampouris" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Step
+CARL:Step rdf:type owl:NamedIndividual ;
+          owl:dateTime "1" .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#Warning_1
+CARL:Warning_1 rdf:type owl:NamedIndividual ,
+                        CARL:Warning ;
+               owl:hasDesc "test" .
+
+
+###  http://www.w3.org/2002/07/owl#Thing:Person:new2
+<http://www.w3.org/2002/07/owl#Thing:Person:new2> rdf:type owl:NamedIndividual ;
+                                                  CARL:age 11 .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( CARL:Alert
+                CARL:Message
+                CARL:Warning
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( CARL:BAI
+                CARL:BDI
+                CARL:FRSSD
+                CARL:FUCAS
+                CARL:GDS
+                CARL:HamiltonDepressionScale
+                CARL:MMSE
+                CARL:MoCa
+                CARL:NPI
+                CARL:PSS
+                CARL:RAVLT
+                CARL:ROCFT
+                CARL:TEA
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( CARL:Calories
+                CARL:DailyStepsMeasurement
+                CARL:Device
+                CARL:Event
+                CARL:Output
+                CARL:Person
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( CARL:DailyHeartRateMeasurement
+                CARL:DailyStepsMeasurement
+                CARL:FitbitDailySleepSensorMeasurement
+                CARL:HourlyHeartrateMeasurement
+                CARL:HourlySleepMeasurement
+                CARL:HourlyStepsMeasurement
+                CARL:NumberOfAsleepInNapsCount
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

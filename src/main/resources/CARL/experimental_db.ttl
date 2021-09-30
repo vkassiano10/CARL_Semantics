@@ -1,0 +1,93 @@
+# baseURI: http://localhost/resources/experimental_db
+# imports: http://www.semanticweb.org/ITI/ontologies/2021/2/CARL
+# prefix: exdb
+
+@prefix : <http://localhost/resources/experimental_db#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ypo: <http://localhost/resources/CARL/new_ontology_yposthrizo#> .
+@prefix CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix exdb: <http://localhost/resources/experimental_db#> .
+
+<http://localhost/resources/experimental_db>
+  rdf:type owl:Ontology ;
+  owl:imports <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> ;
+.
+exdb:Person_1
+	rdf:type CARL:Patient ;
+	rdf:type CARL:Person ;
+	CARL:personid "1"^^xsd:int ;
+	CARL:age "90"^^xsd:int ;
+	CARL:username "Vasilis" ;
+.
+exdb:Person_2
+	rdf:type CARL:Patient ;
+	rdf:type CARL:Person ;
+	CARL:personid "2"^^xsd:int ;
+	CARL:age "80"^^xsd:int ;
+	CARL:username "Aggelos" ;
+.
+exdb:Person_3
+	rdf:type CARL:Patient ;
+	rdf:type CARL:Person ;
+	CARL:personid "3"^^xsd:int ;
+	CARL:age "70"^^xsd:int ;
+	CARL:username "Thanos" ;
+.
+
+exdb:Steps_1
+	rdf:type CARL:Step ;
+	CARL:rate "10"^^xsd:int ;
+	CARL:stepsRefersToPatient exdb:Person_1 ;
+.
+
+exdb:Sleep_1
+	rdf:type CARL:Sleep ;
+	CARL:efficiency "40"^^xsd:float ;
+	CARL:sleepRefersToPatient exdb:Person_1 ;
+	CARL:sleepDateTime "10"^^xsd:datetime
+.
+
+exdb:Sleep_2
+	rdf:type CARL:Sleep ;
+	CARL:efficiency "45"^^xsd:float ;
+	CARL:sleepRefersToPatient exdb:Person_2 ;
+	CARL:sleepDateTime "11"^^xsd:datetime
+.
+
+exdb:Sleep_3
+	rdf:type CARL:Sleep ;
+	CARL:efficiency "55"^^xsd:float ;
+	CARL:sleepRefersToPatient exdb:Person_1 ;
+	CARL:sleepDateTime "12"^^xsd:datetime
+.
+
+exdb:Sleep_4
+	rdf:type CARL:Sleep ;
+	CARL:minutes_a_sleep "100"^^xsd:int ;
+	CARL:sleepRefersToPatient exdb:Person_1 ;
+.
+
+exdb:Sleep_5
+	rdf:type CARL:Sleep;
+	CARL:sleepRefersToPatient exdb:Person_1 ;
+	CARL:timeToFallAsleep "100"^^xsd:int ;
+	
+.
+
+exdb:Sleep_6
+	rdf:type CARL:Sleep ;
+	CARL:minutes_a_sleep "400"^^xsd:int ;
+	CARL:sleepRefersToPatient exdb:Person_1 ;
+
+.
+
+exdb:Sleep_7
+	rdf:type CARL:Sleep ;
+	CARL:minutes_a_sleep "200"^^xsd:int ;
+	CARL:sleepRefersToPatient exdb:Person_1 ;
+
+.
