@@ -42,6 +42,7 @@ public class GraphDBPopulation {
             // Various methods for population of the graphDB with the proper data.
             createUserInGraphDB(userUnderExamination);
             populateFibaroComponent(userUnderExamination.getUserFibaroList());
+            populateFibaroEventComponent(userUnderExamination.getFibaroEventComponents());
             populateFitbitHourlySleepMeasurementComponent(userUnderExamination.getUserHourlySleepArray());
             populateFitbitHourlyStepsMeasurementComponent(userUnderExamination.getUserHourlyStepsArray());
             populateFitbitHourlyHeartRateMeasurementComponent(userUnderExamination.getUserHourlyHeartRateArray());
@@ -52,6 +53,7 @@ public class GraphDBPopulation {
             populateFitbitDailySleepMeasurementComponent(userUnderExamination);
             populateFitbitDailyHeartRateMeasurementComponent(userUnderExamination);
 
+            populateSleepCountsToGraphdb(userUnderExamination);
             // Create the object that is responsible for executing the rules.
             //GraphDBRulesExecution GraphDBRulesExecution = new GraphDBRulesExecution(repositoryConnection, usersList);
 
@@ -128,6 +130,7 @@ public class GraphDBPopulation {
 
     void populateFibaroEventComponent(List<FibaroEventComponent> fibaroEventComponents) throws IOException {
 
+
         String strInsert = BLANK_STRING;
         for (FibaroEventComponent fibaroEventComponent : fibaroEventComponents) {
 
@@ -136,57 +139,61 @@ public class GraphDBPopulation {
             //"<" + detectionURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_TBOX + "Detection" + ">
         //    System.out.println("THE UNIQUE ID IS : " + fibaroEventComponent.getUniqueId());
 
-            String fibaroEventURI = Vocabulary.NAMESPACE_CARL + "fibaroEvent_" + fibaroEventComponent.getUniqueId();
-            String roomURI = Vocabulary.NAMESPACE_CARL + "Room_" + fibaroEventComponent.getRoomId();
-            String deviceURI = Vocabulary.NAMESPACE_CARL + "Device_" + fibaroEventComponent.getDeviceId();
-            String sectionURI = Vocabulary.NAMESPACE_CARL + "Section_" + fibaroEventComponent.getSectionId();
+            String fibaroEventURI = Vocabulary.NAMESPACE_CARL + "FibaroEvent_" + fibaroEventComponent.getUniqueId();
+            String roomURI = Vocabulary.NAMESPACE_CARL + "Room_" + fibaroEventComponent.getRoomName() + fibaroEventComponent.getRoomId();
+            String deviceURI = Vocabulary.NAMESPACE_CARL + "Device_" + fibaroEventComponent.getDeviceName() + fibaroEventComponent.getDeviceId();
+            //String sectionURI = Vocabulary.NAMESPACE_CARL + "Section_" + fibaroEventComponent.getSectionId();
             // TODO maybe change the Person_ to User_
             String personURI = Vocabulary.NAMESPACE_CARL + "Person_" + fibaroEventComponent.getUserId();
 
-            strInsert =     "<" + fibaroEventURI + "> <" + RDF.TYPE + "> <" + Vocabulary.PREFIX + "fibaroSensorMeasurement" + "> .\n"
-                    + "<" + roomURI + "> <" + RDF.TYPE + "> <" + Vocabulary.PREFIX + "Room" + "> .\n"
-                    + "<" + deviceURI + "> <" + RDF.TYPE + "> <" + Vocabulary.PREFIX + "Device" + "> .\n"
-                    + "<" + sectionURI + "> <" + RDF.TYPE + "> <" + Vocabulary.PREFIX + "Section" + "> .\n"
-                    + "<" + personURI + "> <" + RDF.TYPE + "> <" + Vocabulary.PREFIX + "Person" + "> .\n";
+            strInsert =     "<" + fibaroEventURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Event" + "> .\n"
+                    + "<" + roomURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Room" + "> .\n"
+                    + "<" + deviceURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Device" + "> .\n"
+                    //+ "<" + sectionURI + "> <" + RDF.TYPE + "> <" + Vocabulary.PREFIX + "Section" + "> .\n"
+                    + "<" + personURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Person" + "> .\n";
 
             strInsert = strInsert
 
                     +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "fibaroSensorMeasurementId" + "> " + "\"" + fibaroEventComponent.getUniqueId() + "\"" + "^^xsd:int" + "."
-                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventTimestamp" + "> " + "\"" + fibaroEventComponent.getTimestamp() + "\"" + "^^xsd:timestamp" + "."
+                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventStartTime" + "> " + "\"" + fibaroEventComponent.getStartTimestamp() + "\"" + "^^xsd:timestamp" + "."
+                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventEndTime" + "> " + "\"" + fibaroEventComponent.getEndTimestamp() + "\"" + "^^xsd:timestamp" + "."
                     +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventDuration" + "> " + "\"" + fibaroEventComponent.getDuration() + "\"" + "^^xsd:int" + "."
-                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventName" + "> " + "\"" + fibaroEventComponent.getEventName() + "\"" + "^^xsd:string" + "."
+                    //+" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventName" + "> " + "\"" + fibaroEventComponent.getEventName() + "\"" + "^^xsd:string" + "."
                     +" <" + roomURI + "> <" + Vocabulary.NAMESPACE_CARL + "roomId" + "> " + "\"" + fibaroEventComponent.getRoomId() + "\"" + "^^xsd:int" + "."
                     +" <" + roomURI + "> <" + Vocabulary.NAMESPACE_CARL + "roomName" + "> " + "\"" + fibaroEventComponent.getRoomName() + "\"" + "^^xsd:string" + "."
-                    +" <" + sectionURI + "> <" + Vocabulary.NAMESPACE_CARL + "sectionId" + "> " + "\"" + fibaroEventComponent.getSectionId() + "\"" + "^^xsd:int" + "."
-                    +" <" + sectionURI + "> <" + Vocabulary.NAMESPACE_CARL + "sectionName" + "> " + "\"" + fibaroEventComponent.getSectionName() + "\"" + "^^xsd:string" + "."
+                    //+" <" + sectionURI + "> <" + Vocabulary.NAMESPACE_CARL + "sectionId" + "> " + "\"" + fibaroEventComponent.getSectionId() + "\"" + "^^xsd:int" + "."
+                    //+" <" + sectionURI + "> <" + Vocabulary.NAMESPACE_CARL + "sectionName" + "> " + "\"" + fibaroEventComponent.getSectionName() + "\"" + "^^xsd:string" + "."
                     +" <" + deviceURI + "> <" + Vocabulary.NAMESPACE_CARL + "deviceId" + "> " + "\"" + fibaroEventComponent.getDeviceId() + "\"" + "^^xsd:int" + "."
                     +" <" + deviceURI + "> <" + Vocabulary.NAMESPACE_CARL + "deviceName" + "> " + "\"" + fibaroEventComponent.getDeviceName() + "\"" + "^^xsd:string" + "."
-                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventRefersToUser" + "> <" +  personURI + "> ."
+                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventRefersToPerson" + "> <" +  personURI + "> ."
                     +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventContainsDevice" + "> <" +  deviceURI + "> ."
-                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventContainsSection" + "> <" +  sectionURI + "> ."
-                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventContainsRoom" + "> <" +  roomURI + "> ."
+                    //+" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventContainsSection" + "> <" +  sectionURI + "> ."
+                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventContainsRoom" + "> <" +  roomURI + "> .";
                     // TODO maybe change personId to UserId
-                    +" <" + personURI + "> <" + Vocabulary.NAMESPACE_CARL + "personId" + "> " + "\"" + fibaroEventComponent.getUserId() + "\"" + "^^xsd:int" + ".";
+                    //+" <" + personURI + "> <" + Vocabulary.NAMESPACE_CARL + "personId" + "> " + "\"" + fibaroEventComponent.getUserId() + "\"" + "^^xsd:int" + ".";
 
             strInsert = Vocabulary.PREFIXES_ALL +
-                    "INSERT DATA {"
+                    "INSERT DATA{"
                     + strInsert
                     + " }";
 
             //System.out.println(strInsert);
 
             //try (RepositoryConnection connection = this.getUpdateRepo().getConnection()) {
+            Update operation = repositoryConnection.prepareUpdate(QueryLanguage.SPARQL, strInsert);
+            operation.execute();
 
-            repositoryConnection.begin();
-            Update updateOperation = repositoryConnection.prepareUpdate(QueryLanguage.SPARQL, strInsert);
-            updateOperation.execute();
-
-            try {
-                repositoryConnection.commit();
-            } catch (Exception e) {
-                if (repositoryConnection.isActive())
-                    repositoryConnection.rollback();
-            }
+//            repositoryConnection.begin();
+//            Update updateOperation = repositoryConnection.prepareUpdate(QueryLanguage.SPARQL, strInsert);
+//            updateOperation.execute();
+//
+//            try {
+//                repositoryConnection.commit();
+//                System.out.println("Commited");
+//            } catch (Exception e) {
+//                if (repositoryConnection.isActive())
+//                    repositoryConnection.rollback();
+//            }
         }
 
         //System.out.println("QUERY CREATED: \n" + strInsert);
@@ -386,32 +393,32 @@ public class GraphDBPopulation {
         operation.execute();
     }
 
-    void populateCountsToGraphdb(User user){
+    void populateSleepCountsToGraphdb(User user){
 
         String uniqueID = " ";
         for (Map.Entry<String, Triple> pair : user.getUserSleepCountsMap().entrySet()) {
          //   System.out.println(String.format("Key (name) is: %s, Value (age) is : %s", pair.getKey(), pair.getValue()));
 
-            uniqueID = user.getId() + pair.getKey() ;
-            String queryString2 = "PREFIX : <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> \n";
+            uniqueID = user.getId() + "_" + pair.getKey() ;
+            String queryString2 = "PREFIX CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> \n";
             queryString2 += "INSERT Data{\n";
-            queryString2 += ":SleepCount_" + uniqueID;
-            queryString2 += " rdf:type :SleepCount .\n";
-            queryString2 += ":SleepCount_" + uniqueID;
-            queryString2 += " CARL:timestamp ";
+            queryString2 += "CARL:SleepCount_" + uniqueID;
+            queryString2 += " rdf:type CARL:SleepCount .\n";
+            queryString2 += "CARL:SleepCount_" + uniqueID;
+            queryString2 += " CARL:sleepCountTimestamp ";
             queryString2 += "\"" + pair.getKey() + "\"^^xsd:dateTimestamp ";
             queryString2 += ".\n";
-            queryString2 += ":SleepCount_" + uniqueID;
-            queryString2 += " :sleepCountAwake ";
+            queryString2 += "CARL:SleepCount_" + uniqueID;
+            queryString2 += " CARL:sleepCountAwake ";
             queryString2 += "\"" + pair.getValue().getFirst()+ "\"^^xsd:int .";
-            queryString2 += ":SleepCount_" + uniqueID;
-            queryString2 += " :sleepCountRestless ";
+            queryString2 += "CARL:SleepCount_" + uniqueID;
+            queryString2 += " CARL:sleepCountRestless ";
             queryString2 += "\"" + pair.getValue().getSecond()+ "\"^^xsd:int .";
-            queryString2 += ":SleepCount_" + uniqueID;
-            queryString2 += " :sleepCountWake ";
+            queryString2 += "CARL:SleepCount_" + uniqueID;
+            queryString2 += " CARL:sleepCountWake ";
             queryString2 += "\"" + pair.getValue().getThird()+ "\"^^xsd:int .";
-            queryString2 += ":SleepCount_" + uniqueID;
-            queryString2 += " :sleepCountRefersToPerson :Person_" + user.getId();
+            queryString2 += "CARL:SleepCount_" + uniqueID;
+            queryString2 += " CARL:sleepCountRefersToPerson CARL:Person_" + user.getId();
             queryString2 += ".\n";
             queryString2 += "}";
 
@@ -579,37 +586,37 @@ public class GraphDBPopulation {
             //"<" + detectionURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_TBOX + "Detection" + ">
          //   System.out.println("THE UNIQUE ID IS : " + fitbitDailySleepMeasurementComponent.getId());
 
-            String fitbitDailySleepURI = Vocabulary.NAMESPACE_CARL + "FitbitDailySleep_" + fitbitDailySleepMeasurementComponent.getId();
+            String dailySleepMeasurementURI = Vocabulary.NAMESPACE_CARL + "DailySleepMeasurement_" + fitbitDailySleepMeasurementComponent.getId();
             // TODO maybe change the Person_ to User_
             String personURI = Vocabulary.NAMESPACE_CARL + "Person_" + fitbitDailySleepMeasurementComponent.getUser_id();
 
-            strInsert =     "<" + fitbitDailySleepURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "FitbitDailySleepSensorMeasurement" + "> .\n"
+            strInsert =     "<" + dailySleepMeasurementURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "DailySleepMeasurement" + "> .\n"
                     + "<" + personURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Person" + "> .\n";
 
             strInsert = strInsert +
-                    "<" + fitbitDailySleepURI +"> <" +  Vocabulary.NAMESPACE_CARL + "dailySleepRefersToPerson" + "> <" + personURI + "> . \n";
+                    "<" + dailySleepMeasurementURI +"> <" +  Vocabulary.NAMESPACE_CARL + "dailySleepRefersToPerson" + "> <" + personURI + "> . \n";
 
             strInsert = strInsert
 
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "FitbitDailySleepId" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getId() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "light_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getLight_minutes() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "rem_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getLight_minutes() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "deep_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getDeep_minutes() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "minutes_a_sleep" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getMinutes_asleep() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "efficiency" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getEfficiency() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "wake_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getWake_minutes() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "asleep_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getAsleep_minutes() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "restless_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getRestless_minutes() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "awake_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getAwake_minutes() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "FitbitDailySleepId" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getId() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "light_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getLight_minutes() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "rem_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getLight_minutes() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "deep_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getDeep_minutes() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "minutes_a_sleep" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getMinutes_asleep() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "efficiency" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getEfficiency() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "wake_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getWake_minutes() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "asleep_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getAsleep_minutes() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "restless_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getRestless_minutes() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "awake_minutes" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getAwake_minutes() + "\"" + "^^xsd:int" + "."
 
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "minutes_awake" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getMinutes_awake() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "minutes_asleep" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getMinutes_asleep() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "wake_count" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getWake_count() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "minutes_awake" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getMinutes_awake() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "minutes_asleep" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getMinutes_asleep() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "wake_count" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getWake_count() + "\"" + "^^xsd:int" + "."
 
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "light_count" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getLight_count() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "deep_count" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getDeep_count() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "rem_count" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getRem_count() + "\"" + "^^xsd:int" + "."
-                    +" <" + fitbitDailySleepURI + "> <" + Vocabulary.NAMESPACE_CARL + "datetimeDailySleep" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getDate() + "\"" + "^^xsd:dateTimeStamp" + ".";
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "light_count" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getLight_count() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "deep_count" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getDeep_count() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "rem_count" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getRem_count() + "\"" + "^^xsd:int" + "."
+                    +" <" + dailySleepMeasurementURI + "> <" + Vocabulary.NAMESPACE_CARL + "datetimeDailySleep" + "> " + "\"" + fitbitDailySleepMeasurementComponent.getDate() + "\"" + "^^xsd:dateTimeStamp" + ".";
 
 
             // TODO maybe change personId to UserId

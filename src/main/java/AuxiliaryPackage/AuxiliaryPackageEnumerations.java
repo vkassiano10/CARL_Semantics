@@ -7,6 +7,8 @@ public class AuxiliaryPackageEnumerations {
         OVEN      (20,   500,"Oven"),
         DRYER     (20,   600,"Dryer"),
         TELEVISION(10,   10, "TV"),
+        COFFEE_MAKER(1,   2, "Coffee Maker"),
+        SHAKER(1,   2, "Shaker"),
         MICROWAVE (1000, 60, "Microwave");
 
         int    powerThreshold;

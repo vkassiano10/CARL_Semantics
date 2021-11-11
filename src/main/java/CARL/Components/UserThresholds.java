@@ -11,29 +11,12 @@ public class UserThresholds {
     private int steps_Low = INITIAL_UNKNOWN_VALUE;
     private int steps_Medium = INITIAL_UNKNOWN_VALUE;
     private int fatBurnZone = INITIAL_UNKNOWN_VALUE;
+    private int cardioZone = INITIAL_UNKNOWN_VALUE;
+    private int outOfRangeZone = INITIAL_UNKNOWN_VALUE;
+    private int peakZone = INITIAL_UNKNOWN_VALUE;
     private int stressOrPainDuration = INITIAL_UNKNOWN_VALUE;
     private int inactivity_Duration = INITIAL_UNKNOWN_VALUE;
     private int lackOfExercise_Duration = INITIAL_UNKNOWN_VALUE;
-
-    public UserThresholds(int insomnia_TimeToFallAsleep,
-                          int restlessness_NumberOfInterruptionsInADay,
-                          int increasedNapping_asleepInNaps,
-                          int steps_Low,
-                          int steps_Medium,
-                          int fatBurnZone,
-                          int stressOrPainDuration,
-                          int inactivity_Duration,
-                          int lackOfExercise_Duration) {
-        this.insomnia_TimeToFallAsleep = insomnia_TimeToFallAsleep;
-        this.restlessness_NumberOfInterruptionsInADay = restlessness_NumberOfInterruptionsInADay;
-        this.increasedNapping_asleepInNaps = increasedNapping_asleepInNaps;
-        this.steps_Low = steps_Low;
-        this.steps_Medium = steps_Medium;
-        this.fatBurnZone = fatBurnZone;
-        this.stressOrPainDuration = stressOrPainDuration;
-        this.inactivity_Duration = inactivity_Duration;
-        this.lackOfExercise_Duration = lackOfExercise_Duration;
-    }
 
     public UserThresholds() {
 
@@ -75,4 +58,27 @@ public class UserThresholds {
 
     public void setLackOfExercise_Duration(int lackOfExercise_Duration) { this.lackOfExercise_Duration = lackOfExercise_Duration; }
 
+    public int getCardioZone() {
+        return cardioZone;
+    }
+
+    public void setCardioZone(int cardioZone) {
+        this.cardioZone = cardioZone;
+    }
+
+    public int getOutOfRangeZone() {
+        return outOfRangeZone;
+    }
+
+    public void setOutOfRangeZone(int outOfRangeZone) {
+        this.outOfRangeZone = outOfRangeZone;
+    }
+
+    public int getPeakZone() {
+        return peakZone;
+    }
+
+    public void setPeakZone(int peakZone) {
+        this.peakZone = peakZone;
+    }
 }

@@ -74,7 +74,7 @@ CARL:dailyHeartRateRefersToPerson rdf:type owl:ObjectProperty ;
 
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailySleepRefersToPerson
 CARL:dailySleepRefersToPerson rdf:type owl:ObjectProperty ;
-                              rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+                              rdfs:domain CARL:DailySleepMeasurement ;
                               rdfs:range CARL:Person .
 
 
@@ -111,6 +111,26 @@ CARL:detectsMeasurement rdf:type owl:ObjectProperty ;
                         owl:inverseOf CARL:measurementDetectedBy ;
                         rdfs:domain CARL:Device ;
                         rdfs:range CARL:FitbitSensorMeasurement .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#eventContainsDevice
+CARL:eventContainsDevice rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf owl:topObjectProperty ;
+                         rdfs:domain CARL:Event ;
+                         rdfs:range CARL:Device .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#eventContainsRoom
+CARL:eventContainsRoom rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf owl:topObjectProperty ;
+                       rdfs:domain CARL:Event ;
+                       rdfs:range CARL:Room .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#eventRefersToPerson
+CARL:eventRefersToPerson rdf:type owl:ObjectProperty ;
+                         rdfs:domain CARL:Event ;
+                         rdfs:range CARL:Person .
 
 
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#hasActivity
@@ -305,7 +325,7 @@ CARL:sendAlert rdf:type owl:ObjectProperty ;
 CARL:sleepStageRefersToHourlySleepMeasurement rdf:type owl:ObjectProperty ;
                                               rdfs:subPropertyOf owl:topObjectProperty ;
                                               rdfs:domain CARL:SleepStage ;
-                                              rdfs:range CARL:FitbitDailySleepSensorMeasurement .
+                                              rdfs:range CARL:DailySleepMeasurement .
 
 
 ###  http://www.w3.org/2002/07/owl#topObjectProperty
@@ -378,7 +398,7 @@ CARL:arrythmia rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#asleepCount
 CARL:asleepCount rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf CARL:dailySleepMeasurements ;
-                 rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+                 rdfs:domain CARL:DailySleepMeasurement ;
                  rdfs:range xsd:int .
 
 
@@ -390,7 +410,7 @@ CARL:asleepStageDuration rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#asleep_minutes
 CARL:asleep_minutes rdf:type owl:DatatypeProperty ;
                     rdfs:subPropertyOf CARL:dailySleepMeasurements ;
-                    rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+                    rdfs:domain CARL:DailySleepMeasurement ;
                     rdfs:range xsd:int .
 
 
@@ -472,7 +492,7 @@ CARL:dailyHeartrateMeasurements rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailySleepMeasurements
 CARL:dailySleepMeasurements rdf:type owl:DatatypeProperty ;
                             rdfs:subPropertyOf owl:topDataProperty ;
-                            rdfs:domain CARL:FitbitDailySleepSensorMeasurement .
+                            rdfs:domain CARL:DailySleepMeasurement .
 
 
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#dailyStepsDatetime
@@ -535,7 +555,14 @@ CARL:depression rdf:type owl:DatatypeProperty ;
 CARL:deviceID rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf owl:topDataProperty ;
               rdfs:domain CARL:Device ;
-              rdfs:range xsd:string .
+              rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#deviceName
+CARL:deviceName rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:domain CARL:Device ;
+                rdfs:range xsd:string .
 
 
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#diabetesMelitus
@@ -558,7 +585,7 @@ CARL:distance rdf:type owl:DatatypeProperty ;
 CARL:duration rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf CARL:dailySleepMeasurements ,
                                  CARL:hourlySleepMeasurements ;
-              rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+              rdfs:domain CARL:DailySleepMeasurement ;
               rdfs:range xsd:int .
 
 
@@ -566,7 +593,7 @@ CARL:duration rdf:type owl:DatatypeProperty ;
 CARL:efficiency rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf CARL:dailySleepMeasurements ,
                                    CARL:hourlySleepMeasurements ;
-                rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+                rdfs:domain CARL:DailySleepMeasurement ;
                 rdfs:range xsd:float .
 
 
@@ -595,6 +622,13 @@ CARL:eventEndTime rdf:type owl:DatatypeProperty ;
                   rdfs:range xsd:dateTimeStamp .
 
 
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#eventId
+CARL:eventId rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf CARL:eventEndTime ;
+             rdfs:domain CARL:Event ;
+             rdfs:range xsd:int .
+
+
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#eventStartTime
 CARL:eventStartTime rdf:type owl:DatatypeProperty ;
                     rdfs:subPropertyOf owl:topDataProperty ;
@@ -619,7 +653,7 @@ CARL:female rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#fibaroSensorMeasurementId
 CARL:fibaroSensorMeasurementId rdf:type owl:DatatypeProperty ;
                                rdfs:subPropertyOf owl:topDataProperty ;
-                               rdfs:domain CARL:FibaroSensorMeasurement ;
+                               rdfs:domain CARL:Event ;
                                rdfs:range xsd:int .
 
 
@@ -980,6 +1014,18 @@ CARL:restless_minutes rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf CARL:dailySleepMeasurements .
 
 
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#restlessnessDateTime
+CARL:restlessnessDateTime rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf CARL:restlessnessProperties ;
+                          rdfs:domain CARL:Restlessness ;
+                          rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#restlessnessProperties
+CARL:restlessnessProperties rdf:type owl:DatatypeProperty ;
+                            rdfs:subPropertyOf owl:topDataProperty .
+
+
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#roomId
 CARL:roomId rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf owl:topDataProperty ;
@@ -1049,7 +1095,7 @@ CARL:timeInBed rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#timeToFallAsleep
 CARL:timeToFallAsleep rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf CARL:dailySleepMeasurements ;
-                      rdfs:domain CARL:FitbitDailySleepSensorMeasurement ;
+                      rdfs:domain CARL:DailySleepMeasurement ;
                       rdfs:range xsd:int .
 
 
@@ -1200,6 +1246,11 @@ CARL:DailyHeartRateMeasurement rdf:type owl:Class ;
                                rdfs:subClassOf CARL:FitbitSensorMeasurement .
 
 
+###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#DailySleepMeasurement
+CARL:DailySleepMeasurement rdf:type owl:Class ;
+                           rdfs:subClassOf CARL:FitbitSensorMeasurement .
+
+
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#DailyStepsMeasurement
 CARL:DailyStepsMeasurement rdf:type owl:Class ;
                            rdfs:subClassOf CARL:FitbitSensorMeasurement .
@@ -1255,11 +1306,6 @@ CARL:FibaroTemperatureSensor rdf:type owl:Class ;
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#FirstSymptom
 CARL:FirstSymptom rdf:type owl:Class ;
                   rdfs:subClassOf CARL:Profile .
-
-
-###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#FitbitDailySleepSensorMeasurement
-CARL:FitbitDailySleepSensorMeasurement rdf:type owl:Class ;
-                                       rdfs:subClassOf CARL:FitbitSensorMeasurement .
 
 
 ###  http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#FitbitSensorMeasurement
@@ -1744,8 +1790,8 @@ CARL:Warning_1 rdf:type owl:NamedIndividual ,
 
 [ rdf:type owl:AllDisjointClasses ;
   owl:members ( CARL:DailyHeartRateMeasurement
+                CARL:DailySleepMeasurement
                 CARL:DailyStepsMeasurement
-                CARL:FitbitDailySleepSensorMeasurement
                 CARL:HourlyHeartrateMeasurement
                 CARL:HourlySleepMeasurement
                 CARL:HourlyStepsMeasurement

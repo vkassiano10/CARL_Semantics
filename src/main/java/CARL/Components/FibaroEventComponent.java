@@ -7,7 +7,8 @@ import static AuxiliaryPackage.AuxiliaryPackageConstants.*;
 public class FibaroEventComponent {
 
     private int    uniqueId    = INITIAL_UNKNOWN_VALUE;
-    private String timestamp   = BLANK_STRING;
+    private String startTimestamp   = BLANK_STRING;
+    private String endTimestamp   = BLANK_STRING;
     private int    roomId      = INITIAL_UNKNOWN_VALUE;
     private String roomName    = BLANK_STRING;
     private int    sectionId   = INITIAL_UNKNOWN_VALUE;
@@ -23,11 +24,17 @@ public class FibaroEventComponent {
     }
 
     // TODO Should provided to the constructor all the other class variables as well.
-    public FibaroEventComponent(WATTAGE_EVENTS_APPLIANCE appliance, int duration, float wattageSum) {
+    public FibaroEventComponent(WATTAGE_EVENTS_APPLIANCE appliance, int duration, float wattageSum, String startTimestamp, String endTimestamp, int userId, int deviceId, String roomName, int roomId) {
         setUniqueId(IPOSTIRIZW_FIBARO_EVENT_COMPONENT_COUNTER++);
-        setEventName(appliance.toString());
+        setDeviceName(appliance.toString());
         setDuration(duration);
         setWattageSum(wattageSum);
+        setStartTimestamp(startTimestamp);
+        setEndTimestamp(endTimestamp);
+        setUserId(userId);
+        setDeviceId(deviceId);
+        setRoomName(roomName);
+        setRoomId(roomId);
     }
 
 
@@ -39,12 +46,20 @@ public class FibaroEventComponent {
         this.uniqueId = uniqueId;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public String getStartTimestamp() {
+        return startTimestamp;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setStartTimestamp(String startTimestamp) {
+        this.startTimestamp = startTimestamp;
+    }
+
+    public String getEndTimestamp() {
+        return endTimestamp;
+    }
+
+    public void setEndTimestamp(String endTimestamp) {
+        this.endTimestamp = endTimestamp;
     }
 
     public int getRoomId() {
@@ -125,5 +140,24 @@ public class FibaroEventComponent {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public void status() {
+
+        System.out.println("===============================\n");
+
+        System.out.println("Room Id      : " + roomId);
+        System.out.println("Room Name    : " + roomName);
+//        System.out.println("Section Id   : " + sectionId);
+//        System.out.println("Section Name : " + sectionName);
+        System.out.println("Device Id    : " + deviceId);
+        System.out.println("Device Name  : " + deviceName);
+        System.out.println("Start Time    : " + startTimestamp);
+        System.out.println("End Time    : " + endTimestamp);
+        System.out.println("duration in secs    : " + duration);
+        System.out.println("Wattage Sum : " + wattageSum);
+        System.out.println("User         : " + userId);
+        System.out.println("\n===============================\n");
+
     }
 }

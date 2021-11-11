@@ -42,17 +42,18 @@ public class MainExecution {
         // Retrieve the users from the proper file.
         List<User> users = addUsers();
         List<User> finalUsers = users;
-        users = new ArrayList<>(){{add(finalUsers.get(38));
-            add(finalUsers.get(39));
+        users = new ArrayList<>(){{add(finalUsers.get(50));
+            add(finalUsers.get(4));
         }};
+        finalUsers.get(50).status();
         // If we want to execute the fibaro API connection and retrieve data from there, uncomment the following line.
         //FibaroAPIConnector fibaroApiConnector = new FibaroAPIConnector(users);
 
         // If we want to execute the fibaro API connection and retrieve Watt data from there, uncomment the following line.
-        //FibaroWattAPIConnector fibaroWattApiConnector = new FibaroWattAPIConnector(users);
+        FibaroWattAPIConnector fibaroWattApiConnector = new FibaroWattAPIConnector(users);
 
         // If we want to execute the fitbit API connection and retrieve data from there, uncomment the following line
-        FitbitAPIConnector apiConnector = new FitbitAPIConnector(users);
+        //FitbitAPIConnector apiConnector = new FitbitAPIConnector(users);
 
         // exit(1);
         //System.out.println("edw==");

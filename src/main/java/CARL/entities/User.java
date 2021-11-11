@@ -159,13 +159,21 @@ public class User {
             for (Object object : responseJsonArray) {
 
                 FibaroWattageComponent newFibaroWattageComponent = new FibaroWattageComponent(object);
-                System.out.println(object);
-
+//                System.out.println(object);
+                System.out.println("Status: ");
+                newFibaroWattageComponent.status();
                 userFibaroWattageList.add(newFibaroWattageComponent);
             }
         }
 
-        //fibaroEventComponents = calculateWattageEvents(userFibaroWattageList);
+
+        fibaroEventComponents = calculateWattageEvents(userFibaroWattageList);
+        System.out.println("Number of new events: " + fibaroEventComponents.size());
+        System.out.println("Events Info: ");
+        for (FibaroEventComponent fbcmp: fibaroEventComponents
+             ) {
+            fbcmp.status();
+        }
     }
 
 
@@ -203,7 +211,7 @@ public class User {
 
         numberOfAsleepInNapsMap = calculateNumberOfAsleepInNaps(userHourlySleepArray);
 
-        userSleepCountsMap = calculateCounts(userHourlySleepArray);
+        userSleepCountsMap = calculateSleepCounts(userHourlySleepArray);
 
         napEndTimeCloseToSleepStartTime = calculateNapEndTimeCloseToSleepStarTime(userHourlySleepArray);
 

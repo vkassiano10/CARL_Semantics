@@ -36,14 +36,16 @@ public class GraphDBRulesExecution {
 
     void executeRules() throws IOException {
 
-        LackofMovementRule(repositoryConnection);
+         LackofMovementRule(repositoryConnection);
         // BadQualityofSleep(repositoryConnection);
-        LackofSleep(repositoryConnection);
+         LackofSleep(repositoryConnection);
         // TooMuchSleep(repositoryConnection);
-        LowHR(repositoryConnection);
+         LowHR(repositoryConnection);
         // StressOrPain(repositoryConnection);
         // Insomnia(repositoryConnection);
-        // restlessnessEfficiencyRule(repositoryConnection);
+        restlessnessRule(repositoryConnection);
+        //restlessnessEfficiencyRule(repositoryConnection);
+        //tooManySleepInterruptionsRule(repositoryConnection);
 
     }
     //SPIN Rule 1:steps<100 && steps>0 -->Lack of Movement Problem
@@ -111,16 +113,21 @@ public class GraphDBRulesExecution {
 
     public void restlessnessEfficiencyRule(RepositoryConnection repositoryConnection) throws IOException {
         ArrayList<String> detectedRestlessness = new ArrayList<String>();
-        //select stepsRefersToPatient
+
         String queryString2 = "PREFIX CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> \n";
         queryString2 += "SELECT ?s \n";
         queryString2 += "WHERE { \n";
-        queryString2 += "?p a CARL:Patient . \n";
-        queryString2 += "?s a CARL:Sleep.  \n";
+        queryString2 += "?p a CARL:Person . \n";
+        queryString2 += "?s a CARL:DailySleepMeasurement.  \n";
         queryString2 += "?s CARL:efficiency ?e1. \n";
-        queryString2 += "?s CARL:sleepRefersToPatient ?p. \n";
-        queryString2 += "FILTER(?e1<85) \n";
+        queryString2 += "?s CARL:dailySleepRefersToPerson ?p. \n";
+        queryString2 += "FILTER(?e1<850.0) \n";
         queryString2 += "}";
+
+        if(AuxiliaryPackageConstants.DEBUG_MODE == true){
+            System.out.println("Restlessness/Efficiency RULE: ");
+            System.out.println(queryString2);
+        }
 
         TupleQuery query = repositoryConnection.prepareTupleQuery(queryString2);
         TupleQueryResult result = query.evaluate();
@@ -131,37 +138,40 @@ public class GraphDBRulesExecution {
             String str1 = solution.getValue("s").toString();
             int index = str1.indexOf("#");
             detectedRestlessness.add(str1.substring(index + 1));
-            System.out.println("?s = " + solution.getValue("s"));
+            //System.out.println("?s = " + solution.getValue("s"));
 
         }
 
-        System.out.println("RESTLESSNESS/EFFICIENCY PROBLEMS GENERATED: " + detectedRestlessness.size());
+        if(AuxiliaryPackageConstants.DEBUG_MODE == true) {
+            System.out.println("RESTLESSNESS/EFFICIENCY PROBLEMS GENERATED: " + detectedRestlessness.size());
+            System.out.println();
+        }
+
 
         String uniqueID = UUID.randomUUID().toString();
         for (int i = 0; i < detectedRestlessness.size(); i++) {
             String queryString = "";
             uniqueID = detectedRestlessness.get(i);
             queryString = "PREFIX CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> \n";
-            queryString += "PREFIX : <http://localhost/resources/experimental_db#> ";
             queryString += "INSERT{ \n";
-            queryString += "CARL:SleepProblem" + uniqueID + " rdf:type CARL:Restlessness. \n";
-            queryString += "CARL:SleepProblem" + uniqueID + " CARL:dateTime ?dt1.\n";
-            //queryString += ":SleepProblem" + uniqueID + " :efficiency ?e1.\n";
-            queryString += "?p CARL:hasSleepProblem CARL:SleepProblem" + uniqueID + ".\n";
+            queryString += "CARL:RestlessnessSleepProblem" + uniqueID + " rdf:type CARL:Restlessness. \n";
+            queryString += "CARL:RestlessnessSleepProblem" + uniqueID + " CARL:restlessnessDateTime ?dt1.\n";
+            queryString += "CARL:RestlessnessSleepProblem" + uniqueID + " CARL:efficiency ?e1.\n";
+            queryString += "?p CARL:hasSleepProblem CARL:RestlessnessSleepProblem" + uniqueID + ".\n";
             queryString += "}\n";
             queryString += "WHERE { \n";
-            queryString += "?p a CARL:Patient . \n";
-            queryString += "?s a CARL:Sleep . \n";
-            queryString += "?s CARL:sleepRefersToPatient ?p. \n";
-            queryString += "?s CARL:sleepDateTime ?d1 \n";
-            //queryString += "CARL:" + detectedRestlessness.get(i) + " CARL:dateTime ?d1. \n";
-            //queryString += ":" + detectedRestlessness.get(i) + " :efficiency ?e. \n";
-            //queryString += "CARL:" + detectedRestlessness.get(i) + " CARL:sleepRefersToPatient ?p.\n";
-            //queryString += "BIND(?e AS ?e1) \n";
+            queryString += "?p a CARL:Person . \n";
+            queryString += "?s a CARL:DailySleepMeasurement. \n";
+            queryString += "?s CARL:dailySleepRefersToPerson ?p. \n";
+            queryString += "CARL:" + detectedRestlessness.get(i) + " CARL:datetimeDailySleep ?d1. \n";
+            queryString += "CARL:" + detectedRestlessness.get(i) + " CARL:dailySleepRefersToPerson ?p.\n";
+            queryString += "CARL:" + detectedRestlessness.get(i) + " CARL:efficiency ?e. \n";
+            queryString += "BIND(?e AS ?e1) \n";
             queryString += "BIND(?d1 AS ?dt1) \n";
             queryString += "}";
 
-            System.out.println(detectedRestlessness.get(i));
+            //System.out.println(queryString);
+            //System.out.println(detectedRestlessness.get(i));
             Update operation = repositoryConnection.prepareUpdate(QueryLanguage.SPARQL, queryString);
             operation.execute();
         }
@@ -173,11 +183,11 @@ public class GraphDBRulesExecution {
         String queryString2 = "PREFIX CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> \n";
         queryString2 += "SELECT ?s \n";
         queryString2 += "WHERE { \n";
-        queryString2 += "?p a CARL:Patient . \n";
-        queryString2 += "?s a CARL:DailySleep.  \n";
-        queryString2 += "?s CARL:wakeCount ?wc. \n";
-        queryString2 += "?s CARL:dailySleepRefersToPatient ?p. \n";
-        queryString2 += "FILTER(?wc>10) \n";
+        queryString2 += "?p a CARL:Person . \n";
+        queryString2 += "?s a CARL:DailySleepMeasurement.  \n";
+        queryString2 += "?s CARL:wake_count ?wc. \n";
+        queryString2 += "?s CARL:dailySleepRefersToPerson ?p. \n";
+        queryString2 += "FILTER(?wc>0) \n";
         queryString2 += "}";
 
         TupleQuery query = repositoryConnection.prepareTupleQuery(queryString2);
@@ -189,7 +199,7 @@ public class GraphDBRulesExecution {
             String str1 = solution.getValue("s").toString();
             int index = str1.indexOf("#");
             detectedRestlessness.add(str1.substring(index + 1));
-            System.out.println("?s = " + solution.getValue("s"));
+            //System.out.println("?s = " + solution.getValue("s"));
 
         }
 
@@ -200,26 +210,23 @@ public class GraphDBRulesExecution {
             String queryString = "";
             uniqueID = detectedRestlessness.get(i);
             queryString = "PREFIX CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> \n";
-            queryString += "PREFIX : <http://localhost/resources/experimental_db#> ";
             queryString += "INSERT{ \n";
-            queryString += "CARL:DailySleepProblem" + uniqueID + " rdf:type CARL:Restlessness. \n";
-            queryString += "CARL:DailySleepProblem" + uniqueID + " CARL:dateTime ?dt1.\n";
-            //queryString += ":SleepProblem" + uniqueID + " :efficiency ?e1.\n";
-            queryString += "?p CARL:hasSleepProblem CARL:SleepProblem" + uniqueID + ".\n";
+            queryString += "CARL:Restlessness2SleepProblem" + uniqueID + " rdf:type CARL:Restlessness2. \n";
+            queryString += "CARL:Restlessness2SleepProblem" + uniqueID + " CARL:r2Datetime ?dt1.\n";
+            queryString += "CARL:Restlessness2SleepProblem" + uniqueID + " CARL:r2WakeCount ?wc1.\n";
+            queryString += "?p CARL:hasSleepProblem CARL:Restlessness2SleepProblem" + uniqueID + ".\n";
             queryString += "}\n";
             queryString += "WHERE { \n";
-            queryString += "?p a CARL:Patient . \n";
-            queryString += "?s a CARL:DailySleep . \n";
-            queryString += "?s CARL:dailySleepRefersToPatient ?p. \n";
-            queryString += "?s CARL:sleepDateTime ?d1 \n";
-            //queryString += "CARL:" + detectedRestlessness.get(i) + " CARL:dateTime ?d1. \n";
-            //queryString += ":" + detectedRestlessness.get(i) + " :efficiency ?e. \n";
-            //queryString += "CARL:" + detectedRestlessness.get(i) + " CARL:sleepRefersToPatient ?p.\n";
-            //queryString += "BIND(?e AS ?e1) \n";
+            queryString += "?p a CARL:Person . \n";
+            queryString += "CARL:" + detectedRestlessness.get(i) + " CARL:datetimeDailySleep ?d1. \n";
+            queryString += "CARL:" + detectedRestlessness.get(i) + " CARL:dailySleepRefersToPerson ?p.\n";
+            queryString += "CARL:" + detectedRestlessness.get(i) + " CARL:wake_count ?wc. \n";
+            queryString += "BIND(?wc AS ?wc1) \n";
             queryString += "BIND(?d1 AS ?dt1) \n";
             queryString += "}";
 
-            System.out.println(detectedRestlessness.get(i));
+            //System.out.println(queryString);
+            //System.out.println(detectedRestlessness.get(i));
             Update operation = repositoryConnection.prepareUpdate(QueryLanguage.SPARQL, queryString);
             operation.execute();
         }
@@ -233,13 +240,18 @@ public class GraphDBRulesExecution {
         queryString2 += "SELECT ?sc \n";
         queryString2 += "WHERE { \n";
         queryString2 += "?sc a CARL:SleepCount . \n";
-        queryString2 += "?p a CARL:Patient . \n";
+        queryString2 += "?p a CARL:Person . \n";
         queryString2 += "?sc CARL:sleepCountRefersToPerson ?p. \n";
         queryString2 += "?sc CARL:sleepCountWake ?scw. \n";
-        queryString2 += "?sc CARL:sleepRestless ?scr. \n";
+        queryString2 += "?sc CARL:sleepCountRestless ?scr. \n";
         queryString2 += "?sc CARL:sleepCountAwake ?sca. \n";
-        queryString2 += "FILTER(?sca + ?scw + ?scr>10) \n";
+        queryString2 += "FILTER(?sca + ?scw + ?scr>-1) \n";
         queryString2 += "}";
+
+        if(AuxiliaryPackageConstants.DEBUG_MODE == true){
+            System.out.println("TOO MANY SLEEP INTERRUPTIONS RULE: ");
+            System.out.println(queryString2);
+        }
 
         TupleQuery query = repositoryConnection.prepareTupleQuery(queryString2);
         TupleQueryResult result = query.evaluate();
@@ -250,33 +262,45 @@ public class GraphDBRulesExecution {
             String str1 = solution.getValue("sc").toString();
             int index = str1.indexOf("#");
             detectedTopManySleepInterruptions.add(str1.substring(index + 1));
-            System.out.println("?sc = " + solution.getValue("sc"));
+            //System.out.println("?sc = " + solution.getValue("sc"));
 
         }
 
-        System.out.println("TOO MANY SLEEP INTERRUPTIONS PROBLEMS GENERATED: " + detectedTopManySleepInterruptions.size());
+        if(AuxiliaryPackageConstants.DEBUG_MODE == true) {
+            System.out.println("TOO MANY SLEEP INTERRUPTIONS PROBLEMS GENERATED: " + detectedTopManySleepInterruptions.size());
+        }
 
         String uniqueID = UUID.randomUUID().toString();
         for (int i = 0; i < detectedTopManySleepInterruptions.size(); i++) {
             String queryString = "";
             uniqueID = detectedTopManySleepInterruptions.get(i);
+            //System.out.println("uniqueId: " + uniqueID);
             queryString = "PREFIX CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> \n";
-            queryString += "PREFIX : <http://localhost/resources/experimental_db#> ";
             queryString += "INSERT{ \n";
             queryString += "CARL:TooManySleepInterruptionsProblem" + uniqueID + " rdf:type CARL:TooManySleepInterruptions. \n";
-            queryString += "CARL:TooManySleepInterruptionsProblem" + uniqueID + " CARL:dateTime ?dt1.\n";
-            //queryString += ":SleepProblem" + uniqueID + " :efficiency ?e1.\n";
+            queryString += "CARL:TooManySleepInterruptionsProblem" + uniqueID + " CARL:tmsiDatetime ?dt1.\n";
+            queryString += "CARL:TooManySleepInterruptionsProblem" + uniqueID + " CARL:tmsiAwakeCount ?ac.\n";
+            queryString += "CARL:TooManySleepInterruptionsProblem" + uniqueID + " CARL:tmsiWakeCount ?wc.\n";
+            queryString += "CARL:TooManySleepInterruptionsProblem" + uniqueID + " CARL:tmsiRestlessCount ?rc.\n";
             queryString += "?p CARL:hasSleepProblem CARL:TooManySleepInterruptionsProblem" + uniqueID + ".\n";
             queryString += "}\n";
             queryString += "WHERE { \n";
-            queryString += "?p a CARL:Patient . \n";
-            queryString += "?sc a CARL:SleepCount . \n";
-            queryString += "?sc CARL:SleepCountRefersToPerson ?p. \n";
-            queryString += "?sc CARL:sleepDateTime ?d1 \n";
+            queryString += "?p a CARL:Person . \n";
+            //queryString += "?sc a CARL:SleepCount . \n";
+            queryString += "CARL:" + detectedTopManySleepInterruptions.get(i) + " CARL:sleepCountRefersToPerson ?p. \n";
+            //queryString += "?sc CARL:sleepCountRefersToPerson ?p. \n";
+            queryString += "CARL:" + detectedTopManySleepInterruptions.get(i) + " CARL:sleepCountTimestamp ?d1. \n";
+            queryString += "CARL:" + detectedTopManySleepInterruptions.get(i) + " CARL:sleepCountAwake ?ac1. \n";
+            queryString += "CARL:" + detectedTopManySleepInterruptions.get(i) + " CARL:sleepCountWake ?wc1. \n";
+            queryString += "CARL:" + detectedTopManySleepInterruptions.get(i) + " CARL:sleepCountRestless ?rc1. \n";
             queryString += "BIND(?d1 AS ?dt1) \n";
+            queryString += "BIND(?ac1 AS ?ac) \n";
+            queryString += "BIND(?wc1 AS ?wc) \n";
+            queryString += "BIND(?rc1 AS ?rc) \n";
             queryString += "}";
+            //System.out.println(queryString);
+            //System.out.println();
 
-            System.out.println(detectedTopManySleepInterruptions.get(i));
             Update operation = repositoryConnection.prepareUpdate(QueryLanguage.SPARQL, queryString);
             operation.execute();
         }
@@ -658,6 +682,7 @@ public class GraphDBRulesExecution {
 
         if(AuxiliaryPackageConstants.DEBUG_MODE == true) {
             System.out.println("LOW HEARTRATE PROBLEMS GENERATED : " + detectedLHR.size());
+            System.out.println("Triples inserted in GraphDB : " + detectedLHR.size()*3);
             System.out.println();
         }
 
@@ -684,6 +709,8 @@ public class GraphDBRulesExecution {
 
             Update operation = repositoryConnection.prepareUpdate(QueryLanguage.SPARQL, queryString);
             operation.execute();
+
+
         }
     }
 
@@ -696,14 +723,13 @@ public class GraphDBRulesExecution {
 
             ArrayList < String > detectedSoP = new ArrayList<String>();
             String queryString2 = "PREFIX CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> \n";
-            queryString2 += "PREFIX : <http://localhost/resources/experimental_db#> ";
             queryString2 += "SELECT ?s \n";
             queryString2 += "WHERE { \n";
             queryString2 += "?p a CARL:Patient . \n";
             queryString2 += "?s a CARL:Step.  \n";
             queryString2 += "?s CARL:rate ?r1. \n";
             queryString2 += "?s CARL:minutes ?duration. \n";
-            queryString2 += "?s CAR;:stepsRefersToPatient ?p. \n";
+            queryString2 += "?s CARL:stepsRefersToPatient ?p. \n";
             queryString2 += "?s2 a CARL:Sleep.  \n";
             queryString2 += "?s2 CARL:heartRateValue ?h1. \n";
             queryString2 += "?s2 CARL:sleepRefersToPatient ?p. \n";
@@ -731,7 +757,6 @@ public class GraphDBRulesExecution {
                 ;
                 String queryString = "";
                 queryString = "PREFIX CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> \n";
-                queryString += "PREFIX : <http://localhost/resources/experimental_db#> ";
                 queryString += "INSERT{ \n";
                 queryString += "CARL:StressOrPainProblem" + uniqueID + " rdf:type CARL:StressOrPain. \n";
                 queryString += "CARL:StressOrPainProblem" + uniqueID + " CARL:dateTime ?dt2.\n";

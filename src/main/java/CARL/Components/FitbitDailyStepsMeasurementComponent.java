@@ -10,7 +10,7 @@ import static AuxiliaryPackage.AuxiliaryPackageConstants.INITIAL_UNKNOWN_VALUE;
 
 /**
  *
- * @author apliatsios
+ * @author vkassiano
  */
 public class FitbitDailyStepsMeasurementComponent {
 

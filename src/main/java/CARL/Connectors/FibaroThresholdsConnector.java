@@ -9,32 +9,32 @@ import java.util.List;
  * The purpose of this class is also to create and populate Ypostirizi Fibaro Component instances, based on the json files
  * that are retrieved through the API requests to the dedicated Ypostirizo server.
  */
-public class FibaroWattAPIConnector {
+public class FibaroThresholdsConnector {
+
+    static String deviceId = "0";
+
 
     /**
      * This string is the url of the API that servers the fibaro component measurements.
      */
-    String url = "https://carl.iti.gr/api/device/v2/fibaro-wattage/2021-10-01/2021-10-10/?format=json";
+    String url = "https://carl.iti.gr/api/device/threshold/" + deviceId + "?format=json";
 
-    public FibaroWattAPIConnector(List<User> users) {
+    public FibaroThresholdsConnector(List<User> users) {
 
         String jsonstr;
 
-        //for (int k = ; k < users.size(); k++) {
+        for (int k = 0; k < users.size(); k++) {
             HttpRequest n = new HttpRequest();
             try {
-                users.get(0).status();
-                jsonstr = n.http_request(url, users.get(0).getToken());
-                users.get(0).populateFibaroWattageComponentsList(jsonstr);
-                //System.out.println("Jsons response:" + jsonstr);
+                jsonstr = n.http_request(url, users.get(k).getToken());
+                users.get(k).populateFibaroComponentsList(jsonstr);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        //}
+        }
 
     }
 
 
 }
-

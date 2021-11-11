@@ -88,6 +88,8 @@ public class FibaroWattageComponent {
             setSectionName(String.valueOf(jsonObject.get("section_name").toString()));
         }
         if (jsonObject.containsKey("device_name")) {
+            if(jsonObject.get("device_name").toString().equals("Coffee Maker"))
+                setDeviceName("COFFEE_MAKER");
             setDeviceName(String.valueOf(jsonObject.get("device_name").toString()));
         }
         if (jsonObject.containsKey("device_id")) {
@@ -96,7 +98,7 @@ public class FibaroWattageComponent {
         if (jsonObject.containsKey("timestamp")) {
             setTimestamp(String.valueOf(jsonObject.get("timestamp").toString()));
         }
-        if (jsonObject.containsKey("old_value")) {
+        if (jsonObject.containsKey("watt")) {
             setWattageValue(Float.valueOf(jsonObject.get("watt").toString()));
         }
         if (jsonObject.containsKey("user")) {

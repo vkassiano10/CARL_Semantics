@@ -37,7 +37,7 @@ public class HttpRequest {
         }
         in.close();
 
-        //System.out.println(response.toString());
+        System.out.println(response.toString());
         //print in String
         return response.toString();
     }

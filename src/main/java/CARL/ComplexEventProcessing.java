@@ -5,6 +5,7 @@ import CARL.Components.FibaroEventComponent;
 import CARL.Components.FibaroWattageComponent;
 import CARL.Components.FitbitHourlySleepMeasurementComponent;
 import CARL.Components.FitbitMinuteHeartRateMeasurementComponent;
+import CARL.entities.User;
 import kotlin.Pair;
 import kotlin.Triple;
 import org.joda.time.DateTime;
@@ -37,12 +38,16 @@ public class ComplexEventProcessing {
                     .filter(i->i.getDeviceName().equalsIgnoreCase(appliance.getDeviceName()))
                     .collect(Collectors.toList());
 
+            System.out.println("Specific Appliance Fibaro wattage list for: " + appliance);
+            System.out.println(specificApplianceFibaroWattageList);
             // Create the watt series
             List<Float> wattSeries = specificApplianceFibaroWattageList
                     .stream()
                     .map(FibaroWattageComponent::getWattageValue)
                     .collect(Collectors.toList());
 
+            System.out.println("Watt series: ");
+            System.out.println(wattSeries);
             // Create the timestamp series. This series contain the timestamps of each component, in order of appearance in the userFibaroWattageList
             List<Long> timestampSeries = specificApplianceFibaroWattageList.stream()
                     .map(k-> {
@@ -55,10 +60,33 @@ public class ComplexEventProcessing {
                     })
                     .collect(Collectors.toList());
 
+            List<String> timestamps = specificApplianceFibaroWattageList.stream()
+                    .map(k-> k.getTimestamp())
+                    .collect(Collectors.toList());
             // Process the Wattage Series.
-            fibaroEventComponents = processWattageSeries(wattSeries, timestampSeries, appliance);
+            if(wattSeries.size()>0){
+                System.out.println("Info: ");
+                System.out.println(appliance);
+                System.out.println(wattSeries);
+                System.out.println(timestampSeries);
+                System.out.println(timestamps);
+                System.out.println(specificApplianceFibaroWattageList.get(0).getDeviceId());
+                System.out.println(specificApplianceFibaroWattageList.get(0).getUserId());
+            }
+
+
+            if(wattSeries.size()>1) {
+                List<FibaroEventComponent> newFibaroEventComponents = new ArrayList<>();
+                newFibaroEventComponents = processWattageSeries(wattSeries, timestampSeries, timestamps, appliance, specificApplianceFibaroWattageList);
+                for (FibaroEventComponent newCmp: newFibaroEventComponents
+                ) {
+                    fibaroEventComponents.add(newCmp);
+                }
+            }
+
         }
 
+        System.out.println("Prin:" + fibaroEventComponents);
         return fibaroEventComponents;
     }
 
@@ -75,11 +103,13 @@ public class ComplexEventProcessing {
 
         String timestampAsString = timestamp.replaceAll("\"", "").replace("^^<http://www.w3.org/2001/XMLSchema#dateTime>", "");
         Timestamp timeStamp = new Timestamp(UTC_FORMAT.parse(timestampAsString).getTime());
+        System.out.println(timeStamp);
+        System.out.println("Ttimestamp: " + timeStamp.getTime());
 
         return timeStamp.getTime();
     }
 
-    static List<FibaroEventComponent> processWattageSeries(List<Float> wattSeries, List<Long> timestampSeries, AuxiliaryPackageEnumerations.WATTAGE_EVENTS_APPLIANCE appliance){
+    static List<FibaroEventComponent> processWattageSeries(List<Float> wattSeries, List<Long> timestampSeries, List<String> timestamps, AuxiliaryPackageEnumerations.WATTAGE_EVENTS_APPLIANCE appliance, List<FibaroWattageComponent> specificApplianceFibaroWattageList){
 
         List<FibaroEventComponent> fibaroEventComponents = new ArrayList<>();
 
@@ -88,6 +118,8 @@ public class ComplexEventProcessing {
         long stopOfEvent         = INITIAL_UNKNOWN_VALUE;
         int  indexOfStartOfEvent = INITIAL_UNKNOWN_VALUE;
         int  indexOfStopOfEvent  = INITIAL_UNKNOWN_VALUE;
+        String startTimestamp = BLANK_STRING;
+        String endTimestamp = BLANK_STRING;
 
         // For each entry in the watt Series list.
         for (int i = 0; i < size; i++) {
@@ -97,6 +129,7 @@ public class ComplexEventProcessing {
 
                 // Lets note the start of the event as well as its index in the list.
                 startOfEvent        = timestampSeries.get(i);
+                startTimestamp = timestamps.get(i);
                 indexOfStartOfEvent = i;
                 continue;
             }
@@ -106,6 +139,7 @@ public class ComplexEventProcessing {
 
                 // Lets note the stop of the event as well as its index in the list.
                 stopOfEvent        = timestampSeries.get(i);
+                endTimestamp = timestamps.get(i);
                 indexOfStopOfEvent = i;
 
                 long durationOfEvent = (stopOfEvent - startOfEvent) / 1000;
@@ -127,14 +161,17 @@ public class ComplexEventProcessing {
                 float powerSum = calculateWattageSum(specificEventPowerWattageSeries, specificEventTimestampSeries);
 
                 // TODO Add more arguments in the constructor.
-                fibaroEventComponents.add(new FibaroEventComponent(appliance, (int) durationOfEvent, powerSum));
+                System.out.println("ADDED COMPONENT: ");
+                System.out.println(appliance + " " + durationOfEvent + " " + powerSum + " " + startTimestamp + " " + endTimestamp);
+                FibaroEventComponent newEvent = new FibaroEventComponent(appliance, (int) durationOfEvent, powerSum, startTimestamp, endTimestamp, specificApplianceFibaroWattageList.get(0).getUserId(), specificApplianceFibaroWattageList.get(0).getDeviceId(), specificApplianceFibaroWattageList.get(0).getRoomName(),specificApplianceFibaroWattageList.get(0).getRoomId());
+                fibaroEventComponents.add(newEvent);
 
                 // Reset the auxiliary variables.
                 startOfEvent        = INITIAL_UNKNOWN_VALUE;
                 indexOfStartOfEvent = INITIAL_UNKNOWN_VALUE;
             }
         }
-
+        System.out.println("added components: " + fibaroEventComponents);
         return fibaroEventComponents;
     }
 
@@ -147,7 +184,7 @@ public class ComplexEventProcessing {
 
         for (int i = 0; i < wattSeries.size() - 1; i++) {
 
-            long concurentFibaroWattageComponentsDuration = (timestampSeries.get(i) - timestampSeries.get(i+1)) / 1000;
+            long concurentFibaroWattageComponentsDuration = (timestampSeries.get(i+1) - timestampSeries.get(i)) / 1000;
 
             powerSum += concurentFibaroWattageComponentsDuration * wattSeries.get(i);
         }
@@ -192,7 +229,7 @@ public class ComplexEventProcessing {
         return numberOfAsleepInNapsMap;
     }
 
-    public static Map<String, Triple> calculateCounts(List<FitbitHourlySleepMeasurementComponent> userHourlySleepArray){
+    public static Map<String, Triple> calculateSleepCounts(List<FitbitHourlySleepMeasurementComponent> userHourlySleepArray){
 
         Map<String, Triple> userSleepCountsMap = new HashMap<>();
 
