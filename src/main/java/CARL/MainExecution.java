@@ -55,6 +55,9 @@ public class MainExecution {
         // If we want to execute the fitbit API connection and retrieve data from there, uncomment the following line
         //FitbitAPIConnector apiConnector = new FitbitAPIConnector(users);
 
+        // If we want to execute the Fibaro thresholds API connection and retrieve data from there, uncomment the following line
+        //FibaroThresholdsConnector  fibaroThresholdsConnector = new FibaroThresholdsConnector(users);
+
         // exit(1);
         //System.out.println("edw==");
 //        for (User user : users) {
@@ -78,6 +81,8 @@ public class MainExecution {
         // Execute the rules
         GraphDBRulesExecution rulesExecution = new GraphDBRulesExecution(connection, users);
 
+        GraphDBWipe gdbw = new GraphDBWipe(connection, users);
+        gdbw.wipeAllFibaroData(connection);
 
     }
 

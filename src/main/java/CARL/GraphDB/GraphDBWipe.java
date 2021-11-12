@@ -209,6 +209,61 @@ public class GraphDBWipe {
         }
     }
 
+    public void wipeSpecificUserFibaroData(RepositoryConnection repositoryConnection, User user){
+
+        String userId = String.valueOf(user.getId());
+
+
+        ArrayList<String> fibaroData = new ArrayList<String>();
+        String queryString2 = "PREFIX CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> \n";
+        queryString2 += "SELECT ?s \n";
+        queryString2 += "WHERE { \n";
+        queryString2 += "?p a CARL:Person . \n";
+        queryString2 += "?p CARL:personId ?id . \n ";
+        queryString2 += "?s a CARL:FibaroData .  \n";
+        queryString2 += "?p CARL:hasDetecteData ?s. \n";
+        queryString2 += "FILTER(?id =" + userId + " ) \n";
+        queryString2 += "}";
+        TupleQuery query2 = repositoryConnection.prepareTupleQuery(queryString2);
+        TupleQueryResult result2 = query2.evaluate();
+        while (result2.hasNext()) {
+            BindingSet solution = result2.next();
+            // ... and print out the value of the variable binding for ?s and ?n
+            String str1 = solution.getValue("s").toString();
+            int index = str1.indexOf("#");
+            fibaroData.add(str1.substring(index + 1));
+            //System.out.println("?s = " + solution.getValue("s"));
+        }
+
+        for (String movProblem : fibaroData) {
+            String queryDeleteFibaroData= "";
+            queryDeleteFibaroData = "PREFIX CARL: <http://www.semanticweb.org/ITI/ontologies/2021/2/CARL#> \n";
+            queryDeleteFibaroData += "DELETE{ \n";
+            queryDeleteFibaroData += Vocabulary.PREFIX + movProblem + " ?p ?o . \n";
+            queryDeleteFibaroData += "?o1 ?p1 " + Vocabulary.PREFIX + movProblem + " . \n";
+            queryDeleteFibaroData += "}\n";
+            queryDeleteFibaroData += "WHERE { \n";
+            queryDeleteFibaroData += Vocabulary.PREFIX + movProblem + " ?p ?o \n";
+            queryDeleteFibaroData += "OPTIONAL {\n" + " ?o1 ?p1 " + Vocabulary.PREFIX + movProblem + "\n" + "}";
+            queryDeleteFibaroData += "}";
+
+            System.out.println(queryDeleteFibaroData);
+
+            Update operation = repositoryConnection.prepareUpdate(QueryLanguage.SPARQL, queryDeleteFibaroData);
+            operation.execute();
+        }
+
+    }
+
+    public void wipeAllFibaroData(RepositoryConnection repositoryConnection){
+
+        for (User user : users) {
+            wipeSpecificUserFibaroData(repositoryConnection, user);
+
+        }
+    }
+
+
     public static void main(String[] args) throws IOException {
         // The following connection credentials should be inserted in the grapdh db connection constructor in order to connect to the remote graph db.
         String username      = "vasilis";
@@ -241,6 +296,7 @@ public class GraphDBWipe {
             }
         });
     }
+
 
 
 }

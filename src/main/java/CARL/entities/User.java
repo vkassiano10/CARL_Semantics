@@ -37,6 +37,7 @@ public class User {
 
     public List<FibaroComponent>                           userFibaroList           = new ArrayList<>();
     public List<FibaroWattageComponent>                    userFibaroWattageList    = new ArrayList<>();
+    public List<DeviceThresholds>                    userDeviceThresholdsList    = new ArrayList<>();
     public List<FibaroEventComponent>                      fibaroEventComponents    = new ArrayList<>();
 
     public List<FitbitDailySleepMeasurementComponent>      userDailySleepArray      = new ArrayList<>();
@@ -166,12 +167,36 @@ public class User {
             }
         }
 
-
         fibaroEventComponents = calculateWattageEvents(userFibaroWattageList);
         System.out.println("Number of new events: " + fibaroEventComponents.size());
         System.out.println("Events Info: ");
         for (FibaroEventComponent fbcmp: fibaroEventComponents
              ) {
+            fbcmp.status();
+        }
+    }
+
+    public void populateFibaroThresholdsList(String jsonStr) throws ParseException, IOException {
+        org.json.simple.JSONObject responseJsonObject = (org.json.simple.JSONObject) new JSONParser().parse(jsonStr);
+
+        if (responseJsonObject.containsKey("device")) {
+            JSONArray responseJsonArray = (JSONArray) responseJsonObject.get("device");
+
+            for (Object object : responseJsonArray) {
+
+                DeviceThresholds newdt = new DeviceThresholds(object);
+//                System.out.println(object);
+                System.out.println("Status: ");
+                newdt.status();
+                userDeviceThresholdsList.add(newdt);
+            }
+        }
+
+        fibaroEventComponents = calculateWattageEvents(userFibaroWattageList);
+        System.out.println("Number of new events: " + fibaroEventComponents.size());
+        System.out.println("Events Info: ");
+        for (FibaroEventComponent fbcmp: fibaroEventComponents
+        ) {
             fbcmp.status();
         }
     }
@@ -319,5 +344,13 @@ public class User {
 
     public Map<String, Triple> getUserSleepCountsMap() {
         return userSleepCountsMap;
+    }
+
+    public List<DeviceThresholds> getUserDeviceThresholdsList() {
+        return userDeviceThresholdsList;
+    }
+
+    public void setUserDeviceThresholdsList(List<DeviceThresholds> userDeviceThresholdsList) {
+        this.userDeviceThresholdsList = userDeviceThresholdsList;
     }
 }

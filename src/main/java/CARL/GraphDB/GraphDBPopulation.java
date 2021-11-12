@@ -54,6 +54,7 @@ public class GraphDBPopulation {
             populateFitbitDailyHeartRateMeasurementComponent(userUnderExamination);
 
             populateSleepCountsToGraphdb(userUnderExamination);
+            populateDeviceThresholdsComponent(userUnderExamination);
             // Create the object that is responsible for executing the rules.
             //GraphDBRulesExecution GraphDBRulesExecution = new GraphDBRulesExecution(repositoryConnection, usersList);
 
@@ -701,6 +702,72 @@ public class GraphDBPopulation {
         }
 
        // System.out.println("QUERY CREATED: \n" + strInsert);
+    }
+
+    void populateDeviceThresholdsComponent(User user) throws IOException {
+
+
+        String strInsert = BLANK_STRING;
+        for (DeviceThresholds DeviceThresholdsComponent : user.getUserDeviceThresholdsList()) {
+
+            String fibaroEventURI = Vocabulary.NAMESPACE_CARL + "FibaroEvent_" + DeviceThresholdsComponent.getDeviceId();
+            //String roomURI = Vocabulary.NAMESPACE_CARL + "Room_" + DeviceThresholdsComponent.getRoomName() + DeviceThresholdsComponent.getRoomId();
+            String deviceURI = Vocabulary.NAMESPACE_CARL + "Device_" + DeviceThresholdsComponent.getDeviceName() + DeviceThresholdsComponent.getDeviceId();
+            //String sectionURI = Vocabulary.NAMESPACE_CARL + "Section_" + fibaroEventComponent.getSectionId();
+            // TODO maybe change the Person_ to User_
+            String personURI = Vocabulary.NAMESPACE_CARL + "Person_" + DeviceThresholdsComponent.getUserId();
+
+            strInsert =     "<" + fibaroEventURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Event" + "> .\n"
+                    //+ "<" + roomURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Room" + "> .\n"
+                    + "<" + deviceURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Device" + "> .\n"
+                    //+ "<" + sectionURI + "> <" + RDF.TYPE + "> <" + Vocabulary.PREFIX + "Section" + "> .\n"
+                    + "<" + personURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Person" + "> .\n";
+
+//            strInsert = strInsert
+//
+//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "fibaroSensorMeasurementId" + "> " + "\"" + fibaroEventComponent.getUniqueId() + "\"" + "^^xsd:int" + "."
+//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventStartTime" + "> " + "\"" + fibaroEventComponent.getStartTimestamp() + "\"" + "^^xsd:timestamp" + "."
+//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventEndTime" + "> " + "\"" + fibaroEventComponent.getEndTimestamp() + "\"" + "^^xsd:timestamp" + "."
+//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventDuration" + "> " + "\"" + fibaroEventComponent.getDuration() + "\"" + "^^xsd:int" + "."
+//                    //+" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventName" + "> " + "\"" + fibaroEventComponent.getEventName() + "\"" + "^^xsd:string" + "."
+//                    +" <" + roomURI + "> <" + Vocabulary.NAMESPACE_CARL + "roomId" + "> " + "\"" + fibaroEventComponent.getRoomId() + "\"" + "^^xsd:int" + "."
+//                    +" <" + roomURI + "> <" + Vocabulary.NAMESPACE_CARL + "roomName" + "> " + "\"" + fibaroEventComponent.getRoomName() + "\"" + "^^xsd:string" + "."
+//                    //+" <" + sectionURI + "> <" + Vocabulary.NAMESPACE_CARL + "sectionId" + "> " + "\"" + fibaroEventComponent.getSectionId() + "\"" + "^^xsd:int" + "."
+//                    //+" <" + sectionURI + "> <" + Vocabulary.NAMESPACE_CARL + "sectionName" + "> " + "\"" + fibaroEventComponent.getSectionName() + "\"" + "^^xsd:string" + "."
+//                    +" <" + deviceURI + "> <" + Vocabulary.NAMESPACE_CARL + "deviceId" + "> " + "\"" + fibaroEventComponent.getDeviceId() + "\"" + "^^xsd:int" + "."
+//                    +" <" + deviceURI + "> <" + Vocabulary.NAMESPACE_CARL + "deviceName" + "> " + "\"" + fibaroEventComponent.getDeviceName() + "\"" + "^^xsd:string" + "."
+//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventRefersToPerson" + "> <" +  personURI + "> ."
+//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventContainsDevice" + "> <" +  deviceURI + "> ."
+//                    //+" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventContainsSection" + "> <" +  sectionURI + "> ."
+//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventContainsRoom" + "> <" +  roomURI + "> .";
+            // TODO maybe change personId to UserId
+            //+" <" + personURI + "> <" + Vocabulary.NAMESPACE_CARL + "personId" + "> " + "\"" + fibaroEventComponent.getUserId() + "\"" + "^^xsd:int" + ".";
+
+            strInsert = Vocabulary.PREFIXES_ALL +
+                    "INSERT DATA{"
+                    + strInsert
+                    + " }";
+
+            //System.out.println(strInsert);
+
+            //try (RepositoryConnection connection = this.getUpdateRepo().getConnection()) {
+            Update operation = repositoryConnection.prepareUpdate(QueryLanguage.SPARQL, strInsert);
+            operation.execute();
+
+//            repositoryConnection.begin();
+//            Update updateOperation = repositoryConnection.prepareUpdate(QueryLanguage.SPARQL, strInsert);
+//            updateOperation.execute();
+//
+//            try {
+//                repositoryConnection.commit();
+//                System.out.println("Commited");
+//            } catch (Exception e) {
+//                if (repositoryConnection.isActive())
+//                    repositoryConnection.rollback();
+//            }
+        }
+
+        //System.out.println("QUERY CREATED: \n" + strInsert);
     }
 
 

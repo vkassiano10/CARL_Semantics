@@ -27,7 +27,7 @@ public class FibaroThresholdsConnector {
             HttpRequest n = new HttpRequest();
             try {
                 jsonstr = n.http_request(url, users.get(k).getToken());
-                users.get(k).populateFibaroComponentsList(jsonstr);
+                users.get(k).populateFibaroThresholdsList(jsonstr);
 
             } catch (Exception e) {
                 e.printStackTrace();
