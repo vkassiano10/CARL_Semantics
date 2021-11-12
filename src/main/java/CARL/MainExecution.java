@@ -81,8 +81,8 @@ public class MainExecution {
         // Execute the rules
         GraphDBRulesExecution rulesExecution = new GraphDBRulesExecution(connection, users);
 
-        GraphDBWipe gdbw = new GraphDBWipe(connection, users);
-        gdbw.wipeAllFibaroData(connection);
+        //GraphDBWipe gdbw = new GraphDBWipe(connection, users);
+        //gdbw.wipeAllFibaroData(connection);
 
     }
 

@@ -58,11 +58,11 @@ public class DeviceThresholds {
         if (jsonObject.containsKey("name")) {
             setDeviceName(String.valueOf(jsonObject.get("name").toString()));
         }
-        if (jsonObject.containsKey("section_id")) {
+        if (jsonObject.containsKey("value")) {
             setPowerThreshold(Integer.valueOf(jsonObject.get("value").toString()));
         }
         if (jsonObject.containsKey("user")) {
-            setUserId(Integer.valueOf(jsonObject.get("id").toString()));
+            setUserId(Integer.valueOf(jsonObject.get("user").toString()));
         }
 
     }

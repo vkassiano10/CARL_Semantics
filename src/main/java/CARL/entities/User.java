@@ -37,7 +37,7 @@ public class User {
 
     public List<FibaroComponent>                           userFibaroList           = new ArrayList<>();
     public List<FibaroWattageComponent>                    userFibaroWattageList    = new ArrayList<>();
-    public List<DeviceThresholds>                    userDeviceThresholdsList    = new ArrayList<>();
+    public List<DeviceThresholds>                          userDeviceThresholdsList    = new ArrayList<>();
     public List<FibaroEventComponent>                      fibaroEventComponents    = new ArrayList<>();
 
     public List<FitbitDailySleepMeasurementComponent>      userDailySleepArray      = new ArrayList<>();

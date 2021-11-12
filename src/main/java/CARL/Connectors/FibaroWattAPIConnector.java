@@ -14,6 +14,7 @@ public class FibaroWattAPIConnector {
     /**
      * This string is the url of the API that servers the fibaro component measurements.
      */
+    //change url with device id
     String url = "https://carl.iti.gr/api/device/v2/fibaro-wattage/2021-10-01/2021-10-10/?format=json";
 
     public FibaroWattAPIConnector(List<User> users) {

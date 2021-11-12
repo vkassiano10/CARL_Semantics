@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class FibaroThresholdsConnector {
 
+    //change device id for all ids
     static String deviceId = "0";
 
 

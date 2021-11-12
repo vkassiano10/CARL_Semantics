@@ -710,38 +710,26 @@ public class GraphDBPopulation {
         String strInsert = BLANK_STRING;
         for (DeviceThresholds DeviceThresholdsComponent : user.getUserDeviceThresholdsList()) {
 
-            String fibaroEventURI = Vocabulary.NAMESPACE_CARL + "FibaroEvent_" + DeviceThresholdsComponent.getDeviceId();
+            String fibaroDeviceThresholdURI = Vocabulary.NAMESPACE_CARL + "FibaroThreshold_" + DeviceThresholdsComponent.getDeviceId();
             //String roomURI = Vocabulary.NAMESPACE_CARL + "Room_" + DeviceThresholdsComponent.getRoomName() + DeviceThresholdsComponent.getRoomId();
             String deviceURI = Vocabulary.NAMESPACE_CARL + "Device_" + DeviceThresholdsComponent.getDeviceName() + DeviceThresholdsComponent.getDeviceId();
             //String sectionURI = Vocabulary.NAMESPACE_CARL + "Section_" + fibaroEventComponent.getSectionId();
             // TODO maybe change the Person_ to User_
             String personURI = Vocabulary.NAMESPACE_CARL + "Person_" + DeviceThresholdsComponent.getUserId();
 
-            strInsert =     "<" + fibaroEventURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Event" + "> .\n"
+            strInsert =     "<" + fibaroDeviceThresholdURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Event" + "> .\n"
                     //+ "<" + roomURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Room" + "> .\n"
                     + "<" + deviceURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Device" + "> .\n"
                     //+ "<" + sectionURI + "> <" + RDF.TYPE + "> <" + Vocabulary.PREFIX + "Section" + "> .\n"
                     + "<" + personURI + "> <" + RDF.TYPE + "> <" + Vocabulary.NAMESPACE_CARL + "Person" + "> .\n";
 
-//            strInsert = strInsert
-//
-//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "fibaroSensorMeasurementId" + "> " + "\"" + fibaroEventComponent.getUniqueId() + "\"" + "^^xsd:int" + "."
-//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventStartTime" + "> " + "\"" + fibaroEventComponent.getStartTimestamp() + "\"" + "^^xsd:timestamp" + "."
-//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventEndTime" + "> " + "\"" + fibaroEventComponent.getEndTimestamp() + "\"" + "^^xsd:timestamp" + "."
-//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventDuration" + "> " + "\"" + fibaroEventComponent.getDuration() + "\"" + "^^xsd:int" + "."
-//                    //+" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventName" + "> " + "\"" + fibaroEventComponent.getEventName() + "\"" + "^^xsd:string" + "."
-//                    +" <" + roomURI + "> <" + Vocabulary.NAMESPACE_CARL + "roomId" + "> " + "\"" + fibaroEventComponent.getRoomId() + "\"" + "^^xsd:int" + "."
-//                    +" <" + roomURI + "> <" + Vocabulary.NAMESPACE_CARL + "roomName" + "> " + "\"" + fibaroEventComponent.getRoomName() + "\"" + "^^xsd:string" + "."
-//                    //+" <" + sectionURI + "> <" + Vocabulary.NAMESPACE_CARL + "sectionId" + "> " + "\"" + fibaroEventComponent.getSectionId() + "\"" + "^^xsd:int" + "."
-//                    //+" <" + sectionURI + "> <" + Vocabulary.NAMESPACE_CARL + "sectionName" + "> " + "\"" + fibaroEventComponent.getSectionName() + "\"" + "^^xsd:string" + "."
-//                    +" <" + deviceURI + "> <" + Vocabulary.NAMESPACE_CARL + "deviceId" + "> " + "\"" + fibaroEventComponent.getDeviceId() + "\"" + "^^xsd:int" + "."
-//                    +" <" + deviceURI + "> <" + Vocabulary.NAMESPACE_CARL + "deviceName" + "> " + "\"" + fibaroEventComponent.getDeviceName() + "\"" + "^^xsd:string" + "."
-//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventRefersToPerson" + "> <" +  personURI + "> ."
-//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventContainsDevice" + "> <" +  deviceURI + "> ."
-//                    //+" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventContainsSection" + "> <" +  sectionURI + "> ."
-//                    +" <" + fibaroEventURI + "> <" + Vocabulary.NAMESPACE_CARL + "eventContainsRoom" + "> <" +  roomURI + "> .";
-            // TODO maybe change personId to UserId
-            //+" <" + personURI + "> <" + Vocabulary.NAMESPACE_CARL + "personId" + "> " + "\"" + fibaroEventComponent.getUserId() + "\"" + "^^xsd:int" + ".";
+            strInsert = strInsert
+
+                    +" <" + fibaroDeviceThresholdURI + "> <" + Vocabulary.NAMESPACE_CARL + "fibaroDeviceId" + "> " + "\"" + DeviceThresholdsComponent.getDeviceId() + "\"" + "^^xsd:int" + "."
+                    +" <" + fibaroDeviceThresholdURI + "> <" + Vocabulary.NAMESPACE_CARL + "deviceName" + "> " + "\"" + DeviceThresholdsComponent.getDeviceName() + "\"" + "^^xsd:timestamp" + "."
+                    +" <" + fibaroDeviceThresholdURI + "> <" + Vocabulary.NAMESPACE_CARL + "threshold" + "> " + "\"" + DeviceThresholdsComponent.getPowerThreshold() + "\"" + "^^xsd:timestamp" + "."
+                    +"<" + deviceURI +"> <" +  Vocabulary.NAMESPACE_CARL + "refersToPerson" + "> <" + personURI + "> . \n";
+
 
             strInsert = Vocabulary.PREFIXES_ALL +
                     "INSERT DATA{"
