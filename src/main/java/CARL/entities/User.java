@@ -39,6 +39,7 @@ public class User {
     public List<FibaroWattageComponent>                    userFibaroWattageList    = new ArrayList<>();
     public List<DeviceThresholds>                          userDeviceThresholdsList    = new ArrayList<>();
     public List<FibaroEventComponent>                      fibaroEventComponents    = new ArrayList<>();
+    public List<Integer>                                   userDeviceList  = new ArrayList<>();
 
     public List<FitbitDailySleepMeasurementComponent>      userDailySleepArray      = new ArrayList<>();
 
@@ -136,7 +137,7 @@ public class User {
     public Map<String, Boolean> getNapEndTimeCloseToSleepStartTime() { return napEndTimeCloseToSleepStartTime; }
 
     public void populateFibaroComponentsList(String jsonStr) throws ParseException, IOException {
-
+        //needs to change to take the appropriate response + list of devices for user
         org.json.simple.JSONObject responseJsonObject = (org.json.simple.JSONObject) new JSONParser().parse(jsonStr);
 
         if (responseJsonObject.containsKey("events")) {

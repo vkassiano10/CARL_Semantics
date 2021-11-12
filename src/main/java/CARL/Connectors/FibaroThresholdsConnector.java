@@ -26,12 +26,14 @@ public class FibaroThresholdsConnector {
 
         for (int k = 0; k < users.size(); k++) {
             HttpRequest n = new HttpRequest();
-            try {
-                jsonstr = n.http_request(url, users.get(k).getToken());
-                users.get(k).populateFibaroThresholdsList(jsonstr);
+            for (int i=0; i< users.get(k).userDeviceList.size(); i++){
+                try {
+                    jsonstr = n.http_request(url, users.get(k).getToken());
+                    users.get(k).populateFibaroThresholdsList(jsonstr);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 

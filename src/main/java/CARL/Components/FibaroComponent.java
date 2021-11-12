@@ -17,8 +17,6 @@ public class FibaroComponent {
     private String sectionName = BLANK_STRING;
     private String deviceName  = BLANK_STRING;
     private int    deviceId    = INITIAL_UNKNOWN_VALUE;
-    private float  oldValue    = INITIAL_UNKNOWN_VALUE;
-    private float  newValue    = INITIAL_UNKNOWN_VALUE;
     private int    user        = INITIAL_UNKNOWN_VALUE;
 
     public FibaroComponent(Object object) throws IOException, ParseException {
@@ -60,14 +58,6 @@ public class FibaroComponent {
 
     public void setDeviceId(Integer deviceId) { this.deviceId = deviceId; }
 
-    public Float getOldValue() { return oldValue; }
-
-    public void setOldValue(Float oldValue) { this.oldValue = oldValue; }
-
-    public Float getNewValue() { return newValue; }
-
-    public void setNewValue(Float newValue) { this.newValue = newValue; }
-
     public Integer getUser() { return user; }
 
     public void setUser(Integer user) { this.user = user; }
@@ -108,12 +98,6 @@ public class FibaroComponent {
         if (jsonObject.containsKey("timestamp")) {
             setTimestamp(String.valueOf(jsonObject.get("timestamp").toString()));
         }
-        if (jsonObject.containsKey("old_value")) {
-            setOldValue(Float.valueOf(jsonObject.get("old_value").toString()));
-        }
-        if (jsonObject.containsKey("new_value")) {
-            setNewValue(Float.valueOf(jsonObject.get("new_value").toString()));
-        }
         if (jsonObject.containsKey("user")) {
             setUser(Integer.valueOf(jsonObject.get("user").toString()));
         }
@@ -132,8 +116,6 @@ public class FibaroComponent {
         System.out.println("Device Id    : " + deviceId);
         System.out.println("Device Name  : " + deviceName);
         System.out.println("TimeStamp    : " + timestamp);
-        System.out.println("New Value    : " + newValue);
-        System.out.println("Old Value    : " + oldValue);
         System.out.println("User         : " + user);
         System.out.println("\n===============================\n");
 

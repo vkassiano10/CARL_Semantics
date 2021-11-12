@@ -52,11 +52,11 @@ public class MainExecution {
         // If we want to execute the fibaro API connection and retrieve Watt data from there, uncomment the following line.
         FibaroWattAPIConnector fibaroWattApiConnector = new FibaroWattAPIConnector(users);
 
-        // If we want to execute the fitbit API connection and retrieve data from there, uncomment the following line
-        //FitbitAPIConnector apiConnector = new FitbitAPIConnector(users);
-
         // If we want to execute the Fibaro thresholds API connection and retrieve data from there, uncomment the following line
         //FibaroThresholdsConnector  fibaroThresholdsConnector = new FibaroThresholdsConnector(users);
+
+        // If we want to execute the fitbit API connection and retrieve data from there, uncomment the following line
+        //FitbitAPIConnector apiConnector = new FitbitAPIConnector(users);
 
         // exit(1);
         //System.out.println("edw==");

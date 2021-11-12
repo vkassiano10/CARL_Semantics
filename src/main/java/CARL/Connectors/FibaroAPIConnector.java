@@ -17,7 +17,7 @@ public class FibaroAPIConnector {
     /**
      * This string is the url of the API that servers the fibaro component measurements.
      */
-    //change temperature for every type of sensor
+    //change temperature to every type of sensor
     //needs a loop to be implemented for list of user devices
     String url = "https://carl.iti.gr/api/device/v2/fibaro/temperature/" + startDate + "/" + stopDate + "?format=json";
 
